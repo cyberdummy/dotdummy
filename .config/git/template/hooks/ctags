@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+PATH="/usr/local/bin:$PATH"
+dir="`git rev-parse --git-dir`"
+trap 'rm -f "$dir/$$.tags"' EXIT
+git ls-files | \
+    ctags \
+    --tag-relative=always \
+    -L - \
+    -f"$dir/$$.tags" \
+    --languages=-javascript,sql \
+    --PHP-kinds=-a
+
+mv "$dir/$$.tags" "$dir/tags"

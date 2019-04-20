@@ -1,0 +1,10 @@
+[Unit]
+Description=Docker Launch Socket
+PartOf=dlaunch.service
+
+[Socket]
+ListenStream=%t/cyberdummy/dlaunch
+Accept=yes
+
+[Install]
+WantedBy=sockets.target

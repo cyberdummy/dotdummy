@@ -1,0 +1,14 @@
+[Unit]
+Description=Docker Laucher Service
+After=network.target dlaunch.socket
+Requires=dlaunch.socket
+
+[Service]
+Type=simple
+ExecStart=/bin/bash %h/.local/bin/dummy dlaunch
+StandardInput=socket
+StandardError=journal
+TimeoutStopSec=5
+
+[Install]
+WantedBy=default.target

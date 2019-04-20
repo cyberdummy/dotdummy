@@ -1,0 +1,25 @@
+#! /bin/sh
+
+# Start the hotkey daemon ~/.config/sxhkd/sxhkdrc
+sxhkd &
+
+# Setup "Desktops" (workspaces) and make sure monitors are in order
+bspc monitor DP-4 -d I II III IV V VI VII VIII
+bspc monitor DP-0 -d X
+bspc monitor DP-4 -s DP-0
+
+# Everything below came as default
+bspc config border_width         2
+bspc config window_gap          12
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+bspc config focus_follows_pointer true
+
+bspc rule -a URxvt:urxvt-fuzzy state=floating sticky=on center=on monitor=C
+bspc rule -a URxvt:urxvt-scratch state=floating sticky=on center=on monitor=C
+bspc rule -a feh state=floating
+bspc rule -a Firefox desktop='^2'
+bspc rule -a qutebrowser desktop='^2'
+bspc rule -a Slack desktop='^9' focus=off

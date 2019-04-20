@@ -1,0 +1,40 @@
+#!/bin/bash
+set -uo pipefail
+
+file=~/.config/dotdummy/docker.sh
+
+if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+    source "$file"
+fi
+
+lint-php() {
+    php -l $1
+
+    phpcs \
+        --basepath=/workspace/ \
+        --report=emacs \
+        --standard=~/.config/phpcs/tom_standard.xml \
+        $1
+}
+
+lint-go() {
+    gofmt -s -w $1
+    golint $1
+}
+
+
+[ $# -gt 0 ] || exit 1
+
+command="$1"
+shift
+
+case "$command" in
+    lint-php)
+        lint-php $@; exit 0 ;;
+    lint-go)
+        lint-go $@; exit 0 ;;
+    *)
+        echo "`basename "$0"` $command: unknown command." >&2
+        exit 1
+        ;;
+esac

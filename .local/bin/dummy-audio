@@ -1,0 +1,122 @@
+#!/bin/bash
+# Pulse audio shenanigans
+set -euo pipefail
+
+file=~/.config/dotdummy/docker.sh
+
+if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+    source "$file"
+fi
+
+# Get the name of the default sink
+default_sink_name() {
+    pactl info \
+        | awk -F ': ' '{if ($1 == "Default Sink") { print $2 }}'
+}
+
+# Get the index of the default sink
+# optional arg of sink name if already looked up
+default_sink_index() {
+    if [[ -z ${1+x} ]]; then
+        local name=$(default_sink_name)
+    else
+        local name=$1
+    fi
+
+    pactl list short sinks \
+        | awk '{if ($2 == "'${name}'") { print $1}}'
+}
+
+# Find a sink by name(ish)
+find_sink() {
+    if [[ -z ${1+x} ]]; then
+        return 1
+    fi
+
+    pactl list short sinks \
+        | grep ${1} | cut -f1
+}
+
+find_headphones_sink() {
+    find_sink "\.headphones\."
+}
+
+find_monitor_sink() {
+    find_sink "\.hdmi\."
+}
+
+move_inputs_to_sink() {
+    if [[ -z ${1+x} ]]; then
+        return 1
+    fi
+
+    while IFS=$'\t' read -r -a fields; do
+        if [[ "${fields[1]}" != "$1" ]]; then
+            pactl move-sink-input ${fields[0]} $1
+        fi
+    done < <(pactl list short sink-inputs)
+}
+
+# Is a sink muted?
+is_mute() {
+    if [[ -z ${1+x} ]]; then
+        return 1
+    fi
+
+    pactl list sinks \
+        | sed '0,/Sink #'${1}'$/d' \
+        | grep 'Mute:' \
+        | head -n1 \
+        | awk '{print $2}'
+}
+
+# Toggle sound between headphones/monitor speakers
+headphones() {
+    local headphones=$(find_headphones_sink)
+    local monitor=$(find_monitor_sink)
+
+    # if on headphone go to monitor
+    if [[ $(default_sink_index) = $headphones ]]; then
+        pactl set-default-sink $monitor
+        local default=$monitor
+    else
+        pactl set-default-sink $headphones
+        local default=$headphones
+    fi
+
+    move_inputs_to_sink $default
+}
+
+# Toggle mute on default sink and all other sinks
+mute() {
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+    local default=$(default_sink_index)
+    local muted=$(is_mute $default)
+
+    if [[ "${muted}" = "no" ]]; then
+        local mute=0
+    else
+        local mute=1
+    fi
+
+    for index in $(pactl list short sinks | awk '{print $1}'); do
+        pactl set-sink-mute $index $mute
+    done
+}
+
+[ $# -gt 0 ] || exit 1
+
+command="$1"
+shift
+
+case "$command" in
+  mute)
+    mute; exit 0 ;;
+  headphones) # hosts
+    headphones; exit 0 ;;
+  *)
+    echo "`basename "$0"` $command: unknown command." >&2
+    exit 1
+    ;;
+esac

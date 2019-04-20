@@ -1,0 +1,11 @@
+URxvt.cursorBlink: true
+
+! Do not need scrollback -- using tmux
+URxvt.saveLines: 0
+URxvt.scrollBar: false
+
+! Extensions (~/.urxvt/ext)
+URxvt.perl-ext-common: clipboard
+
+! Make so can paste from desktop clipboard
+URxvt.keysym.M-v: perl:clipboard:paste

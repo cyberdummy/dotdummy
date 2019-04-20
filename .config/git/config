@@ -1,0 +1,11 @@
+[user]
+	name = Tom Westcott
+	email = tom@cyberdummy.co.uk
+[init]
+	templatedir = ~/.config/git/template
+[alias]
+	ctags = !.git/hooks/ctags
+[commit]
+	gpgsign = true
+[credential]
+	helper = cache --timeout=3600

@@ -1,0 +1,159 @@
+scriptencoding utf-8
+
+syntax enable
+filetype plugin indent on
+runtime macros/matchit.vim
+
+" Appearance {{{
+
+set background=dark
+colorscheme solarized_custom
+
+" Function to show current highlight groups under cursor
+nmap <F10> <Plug>(ShowSyntaxBlocks)
+
+set splitbelow
+set splitright
+
+" Show tabs, trailing spaces etc
+set list
+set listchars=tab:▸\ ,extends:→,precedes:←,nbsp:·,trail:·
+set showbreak=↪\
+
+set noruler " overriding status line anyway and want Ctrl-g to show col
+set number " show current line number
+set relativenumber " show relative other numbers
+set colorcolumn=80,120 " highlight columns at 80 (soft limit) and 120 (hard limit)
+set scrolloff=5 " show 5 lines around current always
+set sidescrolloff=5 " show 5 columns around current column always
+
+" Status line functions in .vim/plugin/my_status_line.vim
+set laststatus=2 " always show a statusline
+let &statusline='  [%{mode()}] %-f %-M %=%{MyLinterStatus()} [QF:%{QuickFixStatus()}]  '
+
+" Folding - http://vimcasts.org/episodes/how-to-fold/
+set foldenable
+set foldmethod=indent
+set foldlevel=100
+
+" Indentation (tabs/spaces)
+set tabstop=4 " number of spaces per tab
+set softtabstop=4 " number of spaces when editing
+set shiftwidth=4 " autoindentation also << >> & ==
+set expandtab " tabs are actuall space
+set autoindent
+
+set backspace=indent,eol,start " backspace over lines and start indents
+" Search
+set hlsearch " show all search matches
+set ignorecase " case insenitive search
+set smartcase " case insensitive if all lower
+set incsearch " highlight first match as we type
+
+" Next and Prev Objects
+omap an <Plug>NextOuterObject
+xmap an <Plug>NextOuterObject
+omap in <Plug>NextInnerObject
+xmap in <Plug>NextInnerObject
+
+omap al <Plug>LastOuterObject
+xmap al <Plug>LastOuterObject
+omap il <Plug>LastInnerObject
+xmap il <Plug>LastInnerObject
+
+" Completion
+set completeopt=menuone,preview " show menu even if single, preview signature
+set dictionary+=~/.vim/dict/words_alpha.txt " bunch of words for dict complete
+set infercase " if I have lower case make sure match is (because ignorecase makes match)
+
+" " Auto closing delims when I want
+" inoremap {<tab> {<CR>}<ESC>O
+" inoremap {;<tab> {<CR>};<ESC>O
+" inoremap (<tab> ()<Left>
+" inoremap (;<tab> (<CR>);<ESC>O
+" inoremap (;<tab> ();<Left>
+" inoremap [<tab> []<Left>
+" inoremap "<tab> ""<Left>
+" inoremap '<tab> ''<Left>
+" inoremap ";<tab> "";<Left><Left>
+" inoremap ';<tab> '';<Left><Left>
+" }}}
+
+" Persistance {{{
+set backupdir=~/.vim/cache/backups
+set directory=~/.vim/cache/swaps
+set undofile
+set undodir=~/.vim/cache/undo
+set undolevels=1000
+set undoreload=1
+
+" ' = how many files to save marks for
+" < = how many register lines saved
+" : = command line history,
+" n = name of viminfo file
+" % = restore buffer list on start
+if !has('nvim')
+    set viminfo='1000,<1000,:10000,n~/.vim/cache/viminfo
+endif
+
+let g:mapleader="\<Space>" " space is leader
+let g:maplocalleader=',' " comma is local leader
+" <Leader>e = open file with wildcard
+" <Leader>f = search for file using find
+" <Leader>a = search using :grep
+" <Leader>s = source a session
+" <Leader>m = make a session
+
+" Files and Buffers
+set hidden " When a buffer is not in view keep it loaded
+
+set wildmenu
+set wildignorecase
+set wildcharm=<C-z>
+nnoremap <Leader>e :e **/*<C-z><S-Tab>
+" Open file in directory of current
+nnoremap ,e :e <C-R>=expand("%:h") . "/" <CR>
+
+set path-=/usr/include
+"nnoremap <Leader>f :find **/*<C-z><S-Tab>
+nnoremap <Leader>f :find **/*
+nnoremap <Leader>b :buf 
+nnoremap <Leader>a :grep! 
+
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --vimgrep\ --ignore\ .git\ --hidden\ $*
+  set grepformat=%f:%l:%c:%m
+endif
+
+" (non)Session Management
+nnoremap <Leader>s :source ~/.vim/sessions/*<C-z><S-Tab>
+nnoremap <Leader>m :e ~/.vim/sessions/*<C-z><S-Tab>
+
+set tags+=.git/tags
+
+" Quickfix jumps same as unimpaired
+nnoremap [Q :cfirst<CR>
+nnoremap ]q :cnext<CR>
+nnoremap [q :cprev<CR>
+nnoremap ]Q :clast<CR>
+
+augroup Fixing
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+augroup END
+
+" Make define and include lists jumpable?
+" https://gist.github.com/romainl/047aca21e338df7ccf771f96858edb86
+function! CCR()
+    let cmdline = getcmdline()
+    if cmdline =~ '\v\C^(dli|il)'
+        return "\<CR>:" . cmdline[0] . "j  " . split(cmdline, " ")[1] . "\<S-Left>\<Left>"
+    else
+        return "\<CR>"
+    endif
+endfunction
+cnoremap <expr> <CR> CCR()
+
+nmap [I :ilist <c-r>=expand("<cword>")<CR><CR>
+nmap [D :dlist <c-r>=expand("<cword>")<CR><CR>

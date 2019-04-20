@@ -1,0 +1,141 @@
+set realname   = 'Tom Westcott'
+set from       = 'tom' # folder hook will overwrite but this can be default
+set hostname   = 'unknown' # override HELO string to keep it vague
+set user_agent = no # don't add a user-agent header to sent mail
+
+# address's that are also "from" me
+alternates '^tom@cyberdummy.co.uk$'
+
+set mbox_type = Maildir # always use maildirs
+
+set mark_old = no # do not mark new messages as old if exit without reading
+set mail_check_recent = no # new mail regardless of exit without reading
+set maildir_check_cur = yes # check current folder as well as new for new messages
+set mail_check_stats = yes # update mailbox stats when checking for new
+set timeout = 30 # check for new mail every 30 secs when idle
+set wrap = 80 # word wrap
+set delete = yes # on sync/close dont prompt for delete
+
+# Index
+set index_format = ' %Z %-15.15L [%<[y?%<[m?%<[d?%[%H:%M]&%[%a %d]>&%[%b %d]>&%[%m/%y]>] %s'
+set sort = threads
+set sort_aux = reverse-last-date-received
+
+# urlscan likes to ignore the $BROWSER env for some reason
+macro index,pager \cu \
+    '<pipe-message>urlscan --run "$BROWSER \"{}\""<Enter>' \
+    'URL Scan'
+
+# using g as a "leader" for nav
+bind index,pager g noop
+
+folder-hook . 'unset trash; unset record; unset postponed' # dont want variables to carry
+
+# Mailboxes
+set folder = '~/mail' # folder that holds the Maildir's
+mailboxes `echo ~/mail/*`
+source ~/.mutt/mailbox.conf.sh| # load mailbox specific settings
+
+set spoolfile = '=tom' # default box
+
+set ssl_starttls = yes # always use STARTTLS if we can
+
+# real delete no Trash folder
+bind index D purge-message
+
+# navigation index
+macro index gg "<first-entry>"
+macro index G "<last-entry>"
+
+bind index,pager gr group-reply
+
+# saving messages (use s leader)
+bind index,pager s noop
+macro index,pager ss '<save-message>' 'Save message manually'
+
+# forwarding to todo lists - addresses come from kard server
+bind index,pager f noop
+macro index,pager ff \
+    '<forward-message>' \
+    'Forward message'
+macro index,pager fw \
+    '<bounce-message>Waiting List<tab><enter><enter>' \
+    'Send to waiting list'
+macro index,pager fi \
+    '<bounce-message>Inbox List<tab><enter><enter>' \
+    'Send to inbox list'
+macro index,pager fj \
+    '<bounce-message>Work List<tab><enter><enter>' \
+    'Send to work list'
+
+set wait_key = no # do not wait for input after a successfull pipe
+set print_command = 'lpr -oColorModel=KGray '
+
+macro attach p \
+    '<pipe-entry>lpr -oColorModel=KGray <enter>' \
+    'Print (grey)'
+
+macro attach P \
+    '<pipe-entry>lpr -# 2 -oColorModel=KGray <enter>' \
+    'Print 2 copies (grey)'
+
+bind attach s noop
+
+macro attach sf \
+    '<save-entry><bol>~/downloads/<eol>' \
+    'Save File'
+
+bind attach,compose g noop
+
+macro attach,compose gu \
+    '<pipe-message>urlscan --run "$BROWSER {}"<Enter>' \
+    'URL Scan'
+
+macro attach,compose gc \
+    '<pipe-entry>urlscan --run "echo \"{}\" | xclip -r -i -selection clipboard"<Enter>' \
+    'URL Scan to clipboard'
+
+# open this part in browser
+macro attach,compose h \
+    '<pipe-entry> ~/.mutt/save-tmp | xargs -n1 $BROWSER<Enter>' \
+    'View in browser'
+
+set sort_alias    = alias
+set reverse_alias = yes
+set alias_file    = '~/.mutt/aliases.muttrc'
+source $alias_file
+
+set header_cache = "~/.cache/mutt/headers"
+set message_cachedir = "~/.cache/mutt/bodies"
+set certificate_file = "~/.cache/mutt/certificates"
+
+set move = no # dont move read messages
+# source '~/.mutt/wallflower-light'
+source '~/.mutt/colours/solarized-dark.muttrc'
+bind editor <space> noop
+bind compose f edit-from
+
+set help = "yes" # show/hide the shortcuts
+set status_on_top = "yes" # put status bar on top
+set status_format = "-%r-New: %b+%n [%f] ----%>-(%s/%S)(%P)---"
+
+auto_view text/html                                      # view html automatically
+alternative_order text/plain text/enriched text/html     # save html for last
+set mailcap_path = ~/.mutt/mailcap
+source '~/.mutt/gpg.muttrc'
+
+# Contacts
+set query_command= "khard email --parsable '%s'"
+bind editor <Tab> complete-query
+bind editor ^T    complete
+macro index,pager A \
+    "<pipe-message>khard add-email<return>" \
+    "add the sender email address to khard"
+
+
+macro index <F8> \
+    "<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+    <shell-escape>notmuch-mutt -r --prompt search<enter>\
+    <change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+    <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+    "notmuch: search mail"

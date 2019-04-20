@@ -1,0 +1,48 @@
+#!/bin/bash
+set -euo pipefail
+
+bookmarks_menu() {
+    local win=$(xdotool getactivewindow)
+    xdotool search --onlyvisible --classname urxvt-fuzzy windowkill || true
+    bspc monitor -f primary
+    urxvt -name urxvt-fuzzy \
+        -bg '#fdf6e3' \
+        -fg '#657b83' \
+        -geometry 100x16 \
+        -e $SHELL \
+        -c "dummy bookmarks"
+
+    [[ -n $win ]] && xdotool windowactivate $win
+}
+
+# https://github.com/hlissner/dotfiles/blob/master/base/arch-desktop/bin/urxvt-pass-manager
+pass_menu() {
+    local win=$(xdotool getactivewindow)
+    xdotool search --onlyvisible --classname urxvt-fuzzy windowkill || true
+    bspc monitor -f primary
+    urxvt -name urxvt-fuzzy \
+        -bg '#fdf6e3' \
+        -fg '#657b83' \
+        -geometry 100x16 \
+        -e $SHELL \
+        -c "dummy pass"
+
+    [[ -n $win ]] && xdotool windowactivate $win
+}
+
+
+[ $# -gt 0 ] || exit 1
+
+command="$1"
+shift
+
+case "$command" in
+    pass)
+        pass_menu; exit 0 ;;
+    bookmarks) # hosts
+        bookmarks_menu; exit 0 ;;
+    *)
+        echo "`basename "$0"` $command: unknown command." >&2
+        exit 1
+        ;;
+esac

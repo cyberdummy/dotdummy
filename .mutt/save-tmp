@@ -1,0 +1,10 @@
+#!/bin/bash
+
+file="$(mktemp).html"
+echo "file://$file"
+
+exec > $file
+
+while IFS= read -r line; do
+  printf '%s\n' "$line"
+done

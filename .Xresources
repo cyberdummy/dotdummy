@@ -1,0 +1,8 @@
+*.font: xft:Fira Code:size=11
+*.italicFont: xft:Script12 BT:size=11
+
+#include ".config/xresources/colours/solarized-dark.xresources"
+
+! Apps
+#include ".config/xresources/urxvt.xresources"
+#include ".config/xresources/rofi.xresources"

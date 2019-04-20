@@ -1,0 +1,140 @@
+#!/bin/bash
+set -euo pipefail
+
+file=~/.config/dotdummy/docker.sh
+
+if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+    source "$file"
+fi
+
+pass_fuzz() {
+    shopt -s nullglob globstar
+
+    prefix=${PASSWORD_STORE_DIR-~/.password-store}
+    password_files=( "$prefix"/**/*.gpg )
+    password_files=( "${password_files[@]#"$prefix"/}" )
+    password_files=( "${password_files[@]%.gpg}" )
+
+    password=$(printf '%s\n' "${password_files[@]}" | fzf )
+
+    nohup pass show -c $password &> /dev/null
+}
+
+bookmarks() {
+    docker run --rm \
+        --name buku \
+        -e BROWSER="browser" \
+        -v ${XDG_RUNTIME_DIR}/cyberdummy/dlaunch:/tmp/dlaunch \
+        -v "${HOME}/.local/share/buku:/.local/share/buku" \
+        --user $(id -u) \
+        cyberdummy/buku -p -f 4 \
+    | tail -n +2 \
+    | sed 's/\t/ /g' \
+    | fzf \
+    | cut -d ' ' -f 2 \
+    | nohup xclip -r -sel clip &> /dev/null
+}
+
+scratchpad() {
+    local SCRID=urxvt-scratch
+    local focused=$(xdotool getactivewindow)
+    local scratch=$(xdotool search --classname $SCRID)
+
+    if [[ -n $scratch ]]; then
+        if [[ $focused == $scratch ]]; then
+            bspc node -g hidden
+            #tmux kill-session -t scratch
+        else
+            bspc node $scratch -g hidden
+            xdotool windowactivate $scratch
+        fi
+    else
+        bspc monitor -f primary
+        urxvt \
+            -name $SCRID \
+            -geometry 100x26 \
+            -bg '#fdf6e3' \
+            -fg '#657b83' \
+            -e bash \
+            -c 'tmux new-session -A -s scratch -n scratch'
+    fi
+
+}
+
+nn() {
+    # push pass db
+    pass git push
+
+    # documents add and push
+    if [[ -d $HOME/documents ]]; then
+        local docs="${HOME}/documents"
+        (
+            cd $docs && \
+            git add -A && \
+            git commit -am 'latest' && \
+            git push
+        ) || true
+    fi
+
+    # home shutdowns
+    if hash dummy-home 2>/dev/null; then
+        dummy home nn
+    fi
+
+    # update
+    if hash pacman 2>/dev/null; then
+        sudo pacman --noconfirm --color always -Syu
+    fi
+
+    # systemctl shutdown
+    systemctl poweroff -i
+}
+
+
+docker_launch() {
+    read -r line
+
+    echo $line > /tmp/dlaunch
+
+    action=`echo "${line}" | awk '{print $1;}'`
+
+    if [ "${action}" == "mpv" ]
+    then
+        mpv ${line:4}
+    elif [ "${action}" == "browser" ]
+    then
+        echo ${line:8} >> /tmp/dlaunch
+        qutebrowser "${line:8}"
+    elif [ "${action}" == "feh" ]
+    then
+        feh ${line:4}
+    fi
+}
+
+[ $# -gt 0 ] || exit 1
+
+command="$1"
+shift
+
+case "$command" in
+    audio)
+        exec "$HOME/.local/bin/dummy-audio" "$@" ;;
+    menu)
+        exec "$HOME/.local/bin/dummy-menu" "$@" ;;
+    pass)
+        pass_fuzz; exit 0 ;;
+    bookmarks)
+        bookmarks; exit 0 ;;
+    scratch)
+        scratchpad; exit 0 ;;
+    nn)
+        nn; exit 0 ;;
+    home)
+        exec "$HOME/.local/bin/dummy-home" "$@" ;;
+    dlaunch)
+        docker_launch "$@"; exit 0 ;;
+    *)
+        echo "`basename "$0"` $command: unknown command." >&2
+        exit 1
+        ;;
+esac

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<ruleset name="Toms Standard" namespace="Tom\Standard">
+    <description>Mostly PSR2 with some extras</description>
+    <rule ref="PSR2"/>
+
+        <!-- String concat dont put vars in "" -->
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
+
+        <!-- Avoid using double quotes -->
+    <rule ref="Squiz.Strings.DoubleQuoteUsage"/>
+
+        <!-- Comments on functions, variables, classes & files -->
+    <rule ref="Squiz.Commenting.FunctionComment.Missing">
+        <exclude-pattern>*Test.php</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Commenting.VariableComment.Missing">
+        <exclude-pattern>*Test.php</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Commenting.ClassComment.Missing">
+        <exclude-pattern>*Test.php</exclude-pattern>
+    </rule>
+
+    <!-- Variables should be camel -->
+    <rule ref="Squiz.NamingConventions.ValidVariableName.NotCamelCaps"/>
+    <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps"/>
+</ruleset>

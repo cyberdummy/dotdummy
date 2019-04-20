@@ -1,0 +1,17 @@
+set from      = 'tom@cyberdummy.co.uk'
+set record    = '=tom/Sent/'
+set postponed = '=tom/Drafts/'
+set trash     = '=tom/Trash/'
+
+macro index,pager sa '<save-message>=tom/Archive<enter><enter><sync-mailbox>' 'Archive Mail'
+
+macro index,pager gi "<change-folder>=tom/<enter>" "Go to Inbox mailbox"
+macro index,pager gj "<change-folder>=tom/Spam<enter>" "Go to Spam mailbox"
+macro index,pager gr "<change-folder>=tom/Trash<enter>" "Go to Trash mailbox"
+macro index,pager gs "<change-folder>=tom/Sent<enter>" "Go to Sent mailbox"
+macro index,pager ga "<change-folder>=tom/Archive<enter>" "Go to Arhive mailbox"
+
+set smtp_url = "smtp://tom@cyberdummy.co.uk@spike.codeclick.co.uk:587"
+set smtp_pass = $my_tom_pass'
+
+# vim: filetype=muttrc

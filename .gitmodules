@@ -1,0 +1,3 @@
+[submodule ".vim/pack/plugins/opt/vim-easy-align"]
+	path = .vim/pack/plugins/opt/vim-easy-align
+	url = https://github.com/junegunn/vim-easy-align.git
