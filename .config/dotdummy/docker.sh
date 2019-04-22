@@ -283,15 +283,13 @@ streamlink(){
 }
 
 feh(){
-    del_stopped feh
-
     docker run \
+        --rm \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         -v "${HOME}/.local/share/bg.jpg:/root/bg.jpg" \
-        -v $(pwd):/workspace \
+        -v "$(pwd):/workspace" \
         --workdir /workspace \
         -e "DISPLAY=unix${DISPLAY}" \
-        --name feh \
         cyberdummy/feh "$@"
     }
 
