@@ -5,6 +5,7 @@ alias mute='dummy audio mute'
 alias headphones='dummy audio headphones'
 alias rain='curl http://wttr.in/Guildford'
 alias nn='dummy nn'
+alias pdf='zathura'
 
 # older servers dont know the tmux TERM type
 ssh(){

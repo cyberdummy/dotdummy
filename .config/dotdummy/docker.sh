@@ -293,6 +293,22 @@ feh(){
         cyberdummy/feh "$@"
     }
 
+zathura(){
+    local file=$(realpath "$1")
+
+    if [[ ! -f $file ]]; then
+        echo "PDF File does not exist" >&2
+        return -1
+    fi
+    docker run \
+        --rm \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v "$file:$file" \
+        -e "DISPLAY=unix${DISPLAY}" \
+        --ipc="host" \
+        cyberdummy/zathura "$file"
+    }
+
 vdirsyncer() {
     del_stopped vdirsyncer
 
