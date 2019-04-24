@@ -47,7 +47,9 @@ bind index D purge-message
 macro index gg "<first-entry>"
 macro index G "<last-entry>"
 
-bind index,pager gr group-reply
+bind index,pager r noop
+bind index,pager rr reply
+bind index,pager ra group-reply
 
 # saving messages (use s leader)
 bind index,pager s noop
