@@ -5,6 +5,7 @@
 	templatedir = ~/.config/git/template
 [alias]
 	ctags = !.git/hooks/ctags
+	root = rev-parse --show-toplevel
 [commit]
 	gpgsign = true
 [credential]

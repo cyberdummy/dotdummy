@@ -6,6 +6,7 @@ alias headphones='dummy audio headphones'
 alias rain='curl http://wttr.in/Guildford'
 alias nn='dummy nn'
 alias pdf='zathura'
+alias cdg='cd $(git root)'
 
 # older servers dont know the tmux TERM type
 ssh(){
