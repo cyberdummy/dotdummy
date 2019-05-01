@@ -50,6 +50,7 @@ set ignorecase " case insenitive search
 set smartcase " case insensitive if all lower
 set incsearch " highlight first match as we type
 
+set report=0 " Report lines yanked (and register) event if only 1 line
 " Next and Prev Objects
 omap an <Plug>NextOuterObject
 xmap an <Plug>NextOuterObject
