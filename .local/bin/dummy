@@ -82,8 +82,12 @@ nn() {
     fi
 
     # update
-    if hash pacman 2>/dev/null; then
-        sudo pacman --noconfirm --color always -Syu
+    if [[ ! -z $IS_MAC ]]; then
+        brew update && brew upgrade
+    else
+        if hash pacman 2>/dev/null; then
+            sudo pacman --noconfirm --color always -Syu
+        fi
     fi
 
     # systemctl shutdown

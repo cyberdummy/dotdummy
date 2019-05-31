@@ -7,6 +7,7 @@ alias rain='curl http://wttr.in/Guildford'
 alias nn='dummy nn'
 alias pdf='zathura'
 alias cdg='cd $(git root)'
+alias ll='ls -lah'
 
 # older servers dont know the tmux TERM type
 ssh(){

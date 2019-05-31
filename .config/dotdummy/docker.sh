@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [[ ! -z $IS_MAC ]]; then
+    return 0
+fi
+
 # this is the stupid way I share files between containers and host
 [[ -d /tmp/dummy ]] || mkdir /tmp/dummy
 
