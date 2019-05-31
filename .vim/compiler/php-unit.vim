@@ -11,7 +11,7 @@ let s:cpo_save = &cpo
 set cpo-=C
 
 "CompilerSet makeprg=vendor/bin/phpunit
-CompilerSet makeprg=docker-compose\ run\ -T\ --rm\ php-cli\ vendor/bin/phpunit
+CompilerSet makeprg=docker-compose\ run\ -T\ --rm\ php-cli\ vendor/bin/phpunit\ $*\ \\\|\ grep\ -v\ vendor
 CompilerSet errorformat=%E%n)\ %.%#,%Z/code/%f:%l,%C%m,%C,%-G%.%#
 
 let &cpo = s:cpo_save

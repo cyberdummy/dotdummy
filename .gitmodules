@@ -1,3 +1,6 @@
 [submodule ".vim/pack/plugins/opt/vim-easy-align"]
 	path = .vim/pack/plugins/opt/vim-easy-align
 	url = https://github.com/junegunn/vim-easy-align.git
+[submodule ".vim/pack/plugins/opt/vim-indent-object"]
+	path = .vim/pack/plugins/opt/vim-indent-object
+	url = https://github.com/michaeljsmith/vim-indent-object.git
