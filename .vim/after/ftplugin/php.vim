@@ -45,7 +45,10 @@ setlocal includeexpr=PHPIncludeExpr(v:fname)
 setlocal isfname+=\\
 setlocal suffixesadd=.php
 setlocal path=,,vendor/*/*/src
-setlocal include=use\\s " add include|require when I need to
+
+ " add include|require when I need to
+setlocal include=use\\s
+
 setlocal define=\\\(\\s\\\|\^\\\)\\\(function\\\|class\\\|trait\\\|interface\\\)\\s
 "setlocal iskeyword+=$\\
 
@@ -131,12 +134,16 @@ nnoremap <buffer> <silent> <LocalLeader>]P :<C-U>call <SID>PropJump('l', 0)<CR>
 
 " Prev Method
 nnoremap <buffer> <silent> [[ :<C-U>call <SID>MethodJump('b', 0)<CR>
+vnoremap <buffer> <silent> [[ :<C-U>call <SID>MethodJump('b', 1)<CR>
 " Next Method
 nnoremap <buffer> <silent> ]] :<C-U>call <SID>MethodJump('', 0)<CR>
+vnoremap <buffer> <silent> ]] :<C-U>call <SID>MethodJump('', 1)<CR>
 
 let b:undo_ftplugin .= ''
             \ . '|nunmap <buffer> [['
+            \ . '|vunmap <buffer> [['
             \ . '|nunmap <buffer> ]]'
+            \ . '|vunmap <buffer> ]]'
             \ . '|nunmap <buffer> <LocalLeader>[i'
             \ . '|nunmap <buffer> <LocalLeader>]i'
             \ . '|nunmap <buffer> <LocalLeader>[c'
