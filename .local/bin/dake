@@ -1,0 +1,31 @@
+#!/bin/bash
+set -euo pipefail
+
+# Script to act as a project utility command runner like make but shell scripts
+# just place a file called "dakefile" with commands in it to run
+
+file=~/.config/dotdummy/docker.sh
+
+if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+    source "$file"
+fi
+
+file="$(pwd)/dakefile"
+
+if [[ ! -r "$file" ]]; then
+    echo "No dakefile found" >&2
+    exit
+fi
+
+if [[ $1 == "help" ]]; then
+    funcs=$(grep 'dake_' $file)
+    echo $funcs
+    exit 0
+fi
+
+source "$file"
+
+cmd="dake_$1"
+shift
+
+eval $cmd $@
