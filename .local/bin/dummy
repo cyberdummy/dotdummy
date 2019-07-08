@@ -82,7 +82,7 @@ nn() {
     fi
 
     # update
-    if [[ ! -z $IS_MAC ]]; then
+    if [[ $(uname -s) == "Darwin" ]]; then
         brew update && brew upgrade
     else
         if hash pacman 2>/dev/null; then

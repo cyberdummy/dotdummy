@@ -4,3 +4,6 @@
 [submodule ".vim/pack/plugins/opt/vim-indent-object"]
 	path = .vim/pack/plugins/opt/vim-indent-object
 	url = https://github.com/michaeljsmith/vim-indent-object.git
+[submodule ".vim/pack/plugins/opt/vim-table-mode"]
+	path = .vim/pack/plugins/opt/vim-table-mode
+	url = git@github.com:dhruvasagar/vim-table-mode.git

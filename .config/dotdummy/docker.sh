@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ ! -z $IS_MAC ]]; then
+if [[ $(uname -s) == "Darwin" ]]; then
     return 0
 fi
 
@@ -196,6 +196,29 @@ pactl(){
 
     docker exec pulseaudio pactl "$@"
 }
+
+play(){
+    del_stopped mpv
+    relies_on pulseaudio
+
+    docker run  -d \
+        -v /etc/localtime:/etc/localtime:ro \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v "${HOME}/.config/mpv:/.config/mpv" \
+        -v "${HOME}/.config/mpv/mpv.conf:/.config/mpv/mpv.conf" \
+        -e "DISPLAY=${DISPLAY}" \
+        -v "$(pwd):/workspace" \
+        --workdir /workspace \
+        --group-add $(getent group audio | cut -d: -f3) \
+        --group-add video \
+        --device /dev/dri \
+        --network desktop \
+        --user $(id -u) \
+        -e PULSE_SERVER=pulseaudio \
+        --runtime=nvidia \
+        --name mpv \
+        cyberdummy/mpv "$@"
+    }
 
 mpv(){
     del_stopped mpv
