@@ -10,6 +10,29 @@ if [[ -r "$file" ]] && [[ -f "$file" ]]; then
     source "$file"
 fi
 
+if [[ ! -z ${1+x} ]] && ([[ $1 == "stow" ]] || [[ $1 == "unstow" ]]); then
+    if [[ -z ${2+x} ]]; then
+        echo "Must supply package name" >&2
+        exit 1
+    fi
+
+    pkg="${HOME}/.config/dotdummy/projects/${2}"
+
+    if [[ ! -d "$pkg" ]]; then
+        echo "Invalid package directory: ${pkg}" >&2
+        exit 1
+    fi
+
+    flags=""
+
+    if [[ $1 == "unstow" ]]; then
+        flags="-D"
+    fi
+
+    stow $flags --no-folding -d $pkg -t $(pwd) .
+    exit 0
+fi
+
 file="$(pwd)/dakefile"
 
 if [[ ! -r "$file" ]]; then
@@ -17,9 +40,19 @@ if [[ ! -r "$file" ]]; then
     exit
 fi
 
-if [[ $1 == "help" ]]; then
-    funcs=$(grep 'dake_' $file)
-    echo $funcs
+if [[ -z ${1+x} ]] || [[ $1 == "help" ]]; then
+    echo "The following actions are available:"
+    for func in $(grep dake_ dakefile  | cut -c 5- | tr -cd '[:alpha:]\n'); do
+        echo "  $func"
+        echo "      $(grep -A 1 dake_${func} $file | tail -n 1)"
+    done
+
+    echo "  stow {package}"
+    echo "          # Install project local config"
+
+    echo "  unstow {package}"
+    echo "          # Remove project local config"
+
     exit 0
 fi
 
