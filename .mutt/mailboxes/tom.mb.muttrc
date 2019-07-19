@@ -2,17 +2,23 @@ alternates \
     '^tom@cyberdummy.co.uk$' \
     '^tom@codeclick.co.uk$'
 
-set my_tom_pass       = `[ -z "$TOM_PASS" ] && pass cyberdummy/@tom || echo $TOM_PASS`
+set my_tom_pass = `[ -z "$TOM_PASS" ] && pass cyberdummy/@tom || echo $TOM_PASS`
+set my_tom_fastmail_pass = `[ -z "$TOM_FASTMAIL_PASS" ] && pass fastmail/mutt || echo $TOM_FASTMAIL_PASS`
 
 folder-hook '=tom/*' 'source ~/.mutt/mailboxes/tom.hook.muttrc'
 
 # make sure if im sending from a "tom" address it goes via correct smtp server
+#send2-hook '~f ^tom@cyberdummy\.co\.uk$' \
+#    'set smtp_url = "smtp://tom@cyberdummy.co.uk@spike.codeclick.co.uk:587" ; \
+#     set smtp_pass = $my_tom_pass'
+
+# Port 565 on fastmail hides home IP from headers
 send2-hook '~f ^tom@cyberdummy\.co\.uk$' \
-    'set smtp_url = "smtp://tom@cyberdummy.co.uk@spike.codeclick.co.uk:587" ; \
-     set smtp_pass = $my_tom_pass'
+    'set smtp_url = "smtps://tom@cyberdummy.co.uk@smtp.fastmail.com:565" ; \
+     set smtp_pass = $my_tom_fastmail_pass'
 send2-hook '~f ^tom@codeclick\.co\.uk$' \
-    'set smtp_url = "smtp://tom@cyberdummy.co.uk@spike.codeclick.co.uk:587" ; \
-     set smtp_pass = $my_tom_pass'
+    'set smtp_url = "smtp://tom@cyberdummy.co.uk@spike.codeclick.co.uk:565" ; \
+     set smtp_pass = $my_tom_fastmail_pass'
 
 fcc-save-hook '~f ^tom@cyberdummy\.co\.uk$' '=tom/Sent/'
 fcc-save-hook '~f ^tom@codeclick\.co\.uk$' '=tom/Sent/'
