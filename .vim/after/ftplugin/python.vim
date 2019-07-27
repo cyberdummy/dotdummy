@@ -10,7 +10,7 @@ compiler python-lint
 " Lint on save
 augroup MyPython
     autocmd! * <buffer>
-    autocmd BufWritePost <buffer> silent make! <afile> | silent redraw!
+    autocmd BufWritePost <buffer> silent lmake! <afile> | silent redraw!
 augroup END
 
 let b:undo_ftplugin .= '|unlet b:current_compiler'

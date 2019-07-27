@@ -20,3 +20,8 @@ endfunction
 function QuickFixStatus() abort
     return len(filter(getqflist(), 'v:val.valid'))
 endfunction
+
+" Get number of errors in location list
+function LocationListStatus() abort
+    return len(filter(getloclist(0), 'v:val.valid'))
+endfunction

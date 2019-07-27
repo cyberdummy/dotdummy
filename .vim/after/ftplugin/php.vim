@@ -19,7 +19,7 @@ compiler php-lint
 " Lint on save
 augroup MyPHP
     autocmd! * <buffer>
-    autocmd BufWritePost <buffer> silent make! <afile> | silent redraw!
+    autocmd BufWritePost <buffer> silent lmake! <afile> | silent redraw!
 augroup END
 
 let b:undo_ftplugin .= '|unlet b:current_compiler'
@@ -139,6 +139,8 @@ vnoremap <buffer> <silent> [[ :<C-U>call <SID>MethodJump('b', 1)<CR>
 nnoremap <buffer> <silent> ]] :<C-U>call <SID>MethodJump('', 0)<CR>
 vnoremap <buffer> <silent> ]] :<C-U>call <SID>MethodJump('', 1)<CR>
 
+nnoremap <buffer> <Leader>t :read ~/.vim/templates/php/**/*<C-z><S-Tab>
+
 let b:undo_ftplugin .= ''
             \ . '|nunmap <buffer> [['
             \ . '|vunmap <buffer> [['
@@ -151,3 +153,4 @@ let b:undo_ftplugin .= ''
             \ . '|nunmap <buffer> <LocalLeader>[p'
             \ . '|nunmap <buffer> <LocalLeader>]p'
             \ . '|nunmap <buffer> <LocalLeader>]P'
+            \ . '|nunmap <buffer> <Leader>t'

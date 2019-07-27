@@ -29,7 +29,7 @@ set sidescrolloff=5 " show 5 columns around current column always
 
 " Status line functions in .vim/plugin/my_status_line.vim
 set laststatus=2 " always show a statusline
-let &statusline='  [%{mode()}] %-f %-M %=%{MyLinterStatus()} [QF:%{QuickFixStatus()}]  '
+let &statusline='  [%{mode()}] %-f %-M %=%{MyLinterStatus()} [LL:%{LocationListStatus()}] [QF:%{QuickFixStatus()}]  '
 
 " Folding - http://vimcasts.org/episodes/how-to-fold/
 set foldenable
@@ -128,8 +128,8 @@ if executable('ag')
 endif
 
 " (non)Session Management
-nnoremap <Leader>s :source ~/.vim/sessions/*<C-z><S-Tab>
-nnoremap <Leader>m :e ~/.vim/sessions/*<C-z><S-Tab>
+nnoremap <Leader>ss :source ~/.vim/sessions/*<C-z><S-Tab>
+nnoremap <Leader>sm :e ~/.vim/sessions/*<C-z><S-Tab>
 
 set tags+=.git/tags
 
@@ -139,9 +139,15 @@ nnoremap ]q :cnext<CR>
 nnoremap [q :cprev<CR>
 nnoremap ]Q :clast<CR>
 
+nnoremap [L :lfirst<CR>
+nnoremap ]l :lnext<CR>
+nnoremap [l :lprev<CR>
+nnoremap ]L :llast<CR>
+
 augroup Fixing
     autocmd!
     autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost l* lwindow
 augroup END
 
 " Make define and include lists jumpable?
@@ -158,3 +164,11 @@ cnoremap <expr> <CR> CCR()
 
 nmap [I :ilist <c-r>=expand("<cword>")<CR><CR>
 nmap [D :dlist <c-r>=expand("<cword>")<CR><CR>
+
+" Jank templates
+augroup Templating
+    autocmd!
+    autocmd FileReadPost */.vim/templates/* execute 'normal `[v`]=kJ=='
+augroup END
+
+nnoremap <Leader>t :read ~/.vim/templates/**/*<C-z><S-Tab>
