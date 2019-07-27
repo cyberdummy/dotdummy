@@ -17,7 +17,7 @@ set wrap = 80 # word wrap
 set delete = yes # on sync/close dont prompt for delete
 
 # Index
-set index_format = ' %Z %-15.15L [%<[y?%<[m?%<[d?%[%H:%M]&%[%a %d]>&%[%b %d]>&%[%m/%y]>] %s'
+set index_format = ' %Z %?X?A&-? %-15.15L [%<[y?%<[m?%<[d?%[%H:%M]&%[%a %d]>&%[%b %d]>&%[%m/%y]>] %s'
 set sort = threads
 set sort_aux = reverse-last-date-received
 
