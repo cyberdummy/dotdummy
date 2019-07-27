@@ -15,8 +15,7 @@ bookmarks_menu() {
     [[ -n $win ]] && xdotool windowactivate $win
 }
 
-# https://github.com/hlissner/dotfiles/blob/master/base/arch-desktop/bin/urxvt-pass-manager
-pass_menu() {
+open_fuzz() {
     local win=$(xdotool getactivewindow)
     xdotool search --onlyvisible --classname urxvt-fuzzy windowkill || true
     bspc monitor -f primary
@@ -25,9 +24,22 @@ pass_menu() {
         -fg '#657b83' \
         -geometry 100x16 \
         -e $SHELL \
-        -c "dummy pass"
+        -c "$1"
 
     [[ -n $win ]] && xdotool windowactivate $win
+}
+
+# https://github.com/hlissner/dotfiles/blob/master/base/arch-desktop/bin/urxvt-pass-manager
+pass_menu() {
+    open_fuzz "dummy pass"
+}
+
+dlip_get_menu() {
+    open_fuzz "dlip get"
+}
+
+dlip_save_menu() {
+    open_fuzz "dlip save"
 }
 
 
@@ -39,6 +51,10 @@ shift
 case "$command" in
     pass)
         pass_menu; exit 0 ;;
+    dlip_get)
+        dlip_get_menu; exit 0 ;;
+    dlip_save)
+        dlip_save_menu; exit 0 ;;
     bookmarks) # hosts
         bookmarks_menu; exit 0 ;;
     *)

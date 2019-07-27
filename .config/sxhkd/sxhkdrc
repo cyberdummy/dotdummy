@@ -18,6 +18,13 @@ super + b
 super + e
     dummy scratch
 
+# get a named clipboard
+super + v
+    dummy menu dlip_get
+# save to a named clipboard
+super + x
+    dummy menu dlip_save
+
 # write out email address for logins
 super + @u
     xdotool type --clearmodifiers 'tom@cyberdummy.co.uk' && xdotool keyup Super_L

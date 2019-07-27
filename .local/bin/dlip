@@ -1,0 +1,54 @@
+#!/bin/bash
+set -euo pipefail
+
+dfile=~/.config/dotdummy/docker.sh
+
+if [[ -r "$dfile" ]] && [[ -f "$dfile" ]]; then
+    source "$dfile"
+fi
+
+dir=~/.local/share/dlip
+
+dlip_init() {
+    if [[ ! -d $dir ]]; then
+        mkdir -p $dir
+    fi
+}
+
+dlip_save() {
+    echo -n "Save to: "
+    read -r line
+
+    local file="${dir}/${line}"
+    echo "Saving to $file"
+
+    xsel -o --clipboard > $file
+}
+
+dlip_get() {
+    sel=$(find $dir/. -type f -printf "%f\n" | fzf)
+
+    if [[ -z $sel ]]; then
+        exit 0
+    fi
+
+    xsel -i --clipboard < "${dir}/${sel}"
+}
+
+[ $# -gt 0 ] || exit 1
+
+command="$1"
+shift
+
+dlip_init
+
+case "$command" in
+    save)
+        dlip_save; exit 0 ;;
+    get)
+        dlip_get; exit 0 ;;
+    *)
+        echo "`basename "$0"` $command: unknown command." >&2
+        exit 1
+        ;;
+esac
