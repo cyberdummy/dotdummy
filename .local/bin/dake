@@ -29,29 +29,52 @@ if [[ ! -z ${1+x} ]] && ([[ $1 == "stow" ]] || [[ $1 == "unstow" ]]); then
         flags="-D"
     fi
 
+    ignore_file="${pkg}/.stow-local-ignore"
+
+    if [[ ! -f $ignore_file ]]; then
+        touch $ignore_file
+    fi
+
     stow $flags --no-folding -d $pkg -t $(pwd) .
+
+    if [[ ! -s $ignore_file ]]; then
+        rm $ignore_file
+    fi
+
     exit 0
 fi
 
 file="$(pwd)/dakefile"
 
 if [[ ! -r "$file" ]]; then
-    echo "No dakefile found" >&2
+    echo "No dakefile found, use: (dake [un]stow [package]) to setup" >&2
     exit
 fi
 
+document_file() {
+    eval f=$1
+    for func in $(grep dake_ "$f" | cut -c 6- | tr -cd '[:alpha:]_\n'); do
+        echo "  $func"
+        echo "      $(grep -A 1 dake_${func} $f | tail -n 1)"
+    done
+}
+
 if [[ -z ${1+x} ]] || [[ $1 == "help" ]]; then
     echo "The following actions are available:"
-    for func in $(grep dake_ dakefile  | cut -c 5- | tr -cd '[:alpha:]\n'); do
-        echo "  $func"
-        echo "      $(grep -A 1 dake_${func} $file | tail -n 1)"
-    done
+
+    document_file dakefile
 
     echo "  stow {package}"
     echo "          # Install project local config"
 
     echo "  unstow {package}"
     echo "          # Remove project local config"
+
+    for src in $(grep 'source ' dakefile | cut -d ' ' -f 2); do
+        echo "From $src"
+        document_file $src
+    done
+
 
     exit 0
 fi

@@ -44,7 +44,8 @@ setlocal includeexpr=PHPIncludeExpr(v:fname)
 " backslash in file name so we can convert "use" paths to files
 setlocal isfname+=\\
 setlocal suffixesadd=.php
-setlocal path=,,vendor/*/*/src
+setlocal path-=.
+setlocal path+=,,vendor/*/*/src
 
  " add include|require when I need to
 setlocal include=use\\s
@@ -108,7 +109,7 @@ function! s:ClassJump(dir, isVisual)
 endfunction
 
 function! s:MethodJump(dir, isVisual)
-    call s:DefJump(a:dir, '^\s*\zs\(public\|protected\|static\)\s\+function\s\+[A-Za-z_]', a:isVisual)
+    call s:DefJump(a:dir, '^\s*\zs\(public\|private\|protected\|static\)\s\+function\s\+[A-Za-z_]', a:isVisual)
 endfunction
 
 function! s:UseJump(dir, isVisual)

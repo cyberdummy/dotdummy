@@ -8,6 +8,8 @@ runtime macros/matchit.vim
 
 set background=dark
 colorscheme solarized_custom
+" Fix undercurl
+set t_Cs=
 
 " Function to show current highlight groups under cursor
 nmap <F10> <Plug>(ShowSyntaxBlocks)

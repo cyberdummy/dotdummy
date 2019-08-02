@@ -520,15 +520,39 @@ skype(){
     }
 
 mysql(){
-    del_stopped mysql
+    local hist=""
 
-    docker run -ti \
-        -v "${HOME}/.inputrc:/root/.inputrc" \
-        -v "${HOME}/.editrc:/root/.editrc" \
-        -v "${HOME}/.my.cnf:/root/.my.cnf" \
-        --name mysql \
-        --entrypoint ""\
-        mysql:5.7 mysql $@
+    if [[ -z ${MYSQL_HISTFILE+x} ]]; then
+        local MYSQL_HISTFILE="${HOME}/.mysql_history"
+    fi
+
+    if [[ ! -e $MYSQL_HISTFILE ]]; then
+        touch $MYSQL_HISTFILE
+    fi
+
+    if [[ -f $MYSQL_HISTFILE ]]; then
+        local tmp_dir=$(mktemp -d -t my-XXXXXXXXXX)
+        cp $MYSQL_HISTFILE "${tmp_dir}/mysql_history"
+        local hist="-v \"${tmp_dir}:/hist\" -e MYSQL_HISTFILE=/hist/mysql_history"
+    fi
+
+    local cmd="docker run -ti \
+        --rm \
+        ${hist} \
+        -v \"${HOME}/.inputrc:/.inputrc\" \
+        -v \"${HOME}/.editrc:/.editrc\" \
+        -v \"${HOME}/.my.cnf:/.my.cnf\" \
+        --user $(id -u) \
+        --entrypoint \"\"\
+        mysql:5.7 mysql \$@"
+
+    #echo $cmd
+    eval $cmd
+
+    if [[ ! -z $tmp_dir ]]; then
+        cp "${tmp_dir}/mysql_history" $MYSQL_HISTFILE
+        rm -rf $tmp_dir
+    fi
 }
 
 transmission() {
