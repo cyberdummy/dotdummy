@@ -191,6 +191,14 @@ pycodestyle() {
     docker run --rm --user $(id -u) -v=$(pwd):/workspace cyberdummy/python pycodestyle $@
 }
 
+pipenv() {
+    docker run --rm --user $(id -u) -v=$(pwd):/workspace cyberdummy/python pipenv $@
+}
+
+pylint() {
+    docker run --rm --user $(id -u) -v=$(pwd):/workspace cyberdummy/python pylint $@
+}
+
 pactl(){
     relies_on pulseaudio
 
