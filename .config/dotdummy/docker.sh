@@ -60,6 +60,14 @@ phpcs(){
         cyberdummy/phpcs $@
 }
 
+phpmd(){
+    docker run --rm \
+        --user $(id -u) \
+        -v=$(pwd):/workspace \
+        --entrypoint "/bin/phpmd" \
+        cyberdummy/phpcs $@
+}
+
 phpcbf(){
     docker run --rm --user $(id -u) -v=$(pwd):/workspace --entrypoint "/bin/phpcbf" cyberdummy/phpcs $@
 }
