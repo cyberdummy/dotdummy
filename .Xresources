@@ -1,4 +1,4 @@
-*.font: xft:Fira Code:size=11
+*.font: xft:Fira Code:size=11,xft:Inconsolata,xft:DejaVu Sans Mono
 *.italicFont: xft:Script12 BT:size=11
 
 #include ".config/xresources/colours/solarized-dark.xresources"
