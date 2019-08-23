@@ -16,8 +16,10 @@ settings:
         <Ctrl+w>: fake-key <Ctrl-backspace>
       normal:
         ;f: hint
+        <Tab>: nop
         b: set-cmd-text -s :buffer
         f: hint links
+        <Tab>: nop
   colors.tabs.bar.bg:
     global: '#555555'
   colors.tabs.even.bg:
