@@ -1,4 +1,4 @@
-
+stty -ixon # disable suspend
 shopt -s histappend
 HISTSIZE=100000
 HISTFILESIZE=100000
