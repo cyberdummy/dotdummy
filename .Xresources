@@ -2,6 +2,7 @@
 *.italicFont: xft:Script12 BT:size=11
 
 #include ".config/xresources/colours/solarized-dark.xresources"
+!#include ".config/xresources/colours/solarized-light.xresources"
 
 ! Apps
 #include ".config/xresources/urxvt.xresources"
