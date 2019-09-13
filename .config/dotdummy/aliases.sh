@@ -9,7 +9,7 @@ alias pdf='zathura'
 alias cdg='cd $(git root)'
 alias ll='ls -lah'
 # Get a command from recent history and copy to clipboard
-alias hist="fc -l -n -r -100 | awk '{\$1=\$1};1' | fzf --print0 | xsel -b -i"
+alias hist="fc -l -n -r -3000 | awk '{\$1=\$1};1' | fzf --print0 | xsel -b -i"
 
 # older servers dont know the tmux TERM type
 ssh(){
