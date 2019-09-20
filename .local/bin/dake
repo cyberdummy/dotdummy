@@ -35,7 +35,9 @@ if [[ ! -z ${1+x} ]] && ([[ $1 == "stow" ]] || [[ $1 == "unstow" ]]); then
         touch $ignore_file
     fi
 
-    stow $flags --no-folding -d $pkg -t $(pwd) .
+    stow $flags --ignore '^docker$' --no-folding -d $pkg -t $(pwd) .
+
+    stow $flags -d $pkg -t $(pwd) .
 
     if [[ ! -s $ignore_file ]]; then
         rm $ignore_file

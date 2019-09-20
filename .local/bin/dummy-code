@@ -30,6 +30,75 @@ lint-python() {
     pylint --reports=n --output-format=parseable $1
 }
 
+create-pr() {
+    local title base head send repo
+
+    read -p 'Head: ' -i $(git rev-parse --abbrev-ref HEAD) -e head
+    local jira=$(echo "$head" | awk -F '_' '{print $1}')
+
+    read -p 'Title: ' -i "$jira" -e title
+    read -p 'Base: ' -i 'release' -e base
+    read -p 'Repo: ' -i $(git config --get remote.origin.url | awk -F ':' '{print $2}' | sed -e "s/.git$//") -e repo
+
+    if [[ "$head" = "$base" ]]; then
+        echo "Head is Base??"
+        return 0
+    fi
+
+
+    # Description
+    local tmp=$(mktemp -t "tmp.XXXXXXXXXX.md")
+    local template="./.git/pr.template"
+
+    if [[ -f $template ]]; then
+        sed $template \
+            -e "s/%%jira%%/$jira/" \
+            > $tmp
+    fi
+
+    local first_sum=$(md5sum $tmp)
+    $EDITOR $tmp
+    local second_sum=$(md5sum $tmp)
+
+    if [[ "$first_sum" = "$second_sum" ]]; then
+        echo "Description unchanged or blank"
+        return 0
+    fi
+
+    local description=$(cat $tmp)
+
+    echo "Creating PR.."
+    echo "Title: $title"
+    echo "Head: $head"
+    echo "Base: $base"
+    echo "Repo: $repo"
+    echo -e "Description:\n"
+    echo -e "$description"
+    echo $tmp
+
+    read -p 'Send? (y/n): ' -e send
+
+    if [[ "$send" != "y" ]]; then
+        echo "Aborting"
+        return 0
+    fi
+
+    local json=$(jq -n \
+        --arg title "$title" \
+        --arg head "$head" \
+        --arg base "$base" \
+        --arg body "$description" \
+        '{title: $title, body: $body, head: $head, base: $base, draft: true }')
+
+    local token=$(pass show github/cli-token)
+
+    curl -X POST \
+        -H 'Content-type: application/json' \
+        -d "$json" \
+        -u "cyberdummy:$token" \
+        "https://api.github.com/repos/${repo}/pulls"
+}
+
 
 [ $# -gt 0 ] || exit 1
 
@@ -43,6 +112,8 @@ case "$command" in
         lint-go $@; exit 0 ;;
     lint-python)
         lint-python $@; exit 0 ;;
+    create-pr)
+        create-pr $@; exit 0 ;;
     *)
         echo "`basename "$0"` $command: unknown command." >&2
         exit 1
