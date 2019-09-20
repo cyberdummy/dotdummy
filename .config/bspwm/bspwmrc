@@ -20,7 +20,11 @@ bspc config focus_follows_pointer true
 bspc rule -a URxvt:urxvt-fuzzy state=floating sticky=on center=on monitor=C
 bspc rule -a URxvt:urxvt-scratch state=floating sticky=on center=on monitor=C
 bspc rule -a feh state=floating
-bspc rule -a Firefox desktop='^3'
 bspc rule -a qutebrowser desktop='^2'
 bspc rule -a mpv desktop='^4'
 bspc rule -a Slack desktop='^9' focus=off
+
+# Default firefox to desktop 3
+bspc rule -a *:Navigator desktop='^3'
+# Personal firefox to 2
+bspc rule -a firefox-Tom desktop='^2'

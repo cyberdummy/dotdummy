@@ -29,6 +29,18 @@ relies_on(){
     done
 }
 
+nvidia_options(){
+    echo -n "--device /dev/dri \
+        --group-add video \
+        --group-add render \
+        --device /dev/vga_arbiter \
+        --device /dev/nvidia0 \
+        --device /dev/nvidiactl \
+        --device /dev/nvidia-modeset \
+        --device /dev/nvidia-uvm \
+        --device /dev/nvidia-uvm-tools"
+}
+
 aws(){
     (
         docker run --rm -it \
@@ -76,17 +88,75 @@ hugo(){
     docker run --rm -v "$(pwd):/workspace" --user $(id -u) -p 1313:1313 cyberdummy/hugo $@
 }
 
+ff(){
+    rm -rf ~/.local/share/buku/bookmarks.html
+    buku --export /.local/share/buku/bookmarks.html
+
+    firefox -P Tom
+}
+
 firefox(){
-    local state
-    state=$(docker inspect --format "{{.State.Running}}" "firefox" 2>/dev/null)
+    local profile='Tom' OPTIND o
+
+    while getopts ":P:" o; do
+        case "$o" in
+            P)
+                # Figure out if we are using a profile
+                profile=$OPTARG
+                ;;
+        esac
+    done
+
+    local profile_dir="${HOME}/.mozilla/firefox/${profile}"
+
+    if [[ ! -d $profile_dir ]]; then
+        echo "That profile does not exist use firefox_pm to create"
+        return;
+    fi
+
+    local container_name="firefox_${profile}"
+    echo $container_name
+
+    # If instance is already running then just exec command inside (probably to open new URL)
+    local state=$(docker inspect --format "{{.State.Running}}" $container_name 2>/dev/null)
 
     if [[ "$state" == "true" ]]; then
-        docker exec firefox firefox "$@"
+        docker exec $container_name firefox "$@"
         return
     fi
 
-    del_stopped firefox
+    del_stopped $container_name
     relies_on pulseaudio
+
+    local cache_dir="${HOME}/.mozilla/cache/firefox/${profile}"
+    mkdir -p $cache_dir
+
+    local nvidia_opts=$(nvidia_options)
+
+    local cmd="docker run  -d \
+        --user $(id -u) \
+        --network desktop \
+        -e PULSE_SERVER=pulseaudio \
+        -v /etc/localtime:/etc/localtime:ro \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -e \"DISPLAY=unix${DISPLAY}\" \
+        -e LANG=C \
+        -v \"${cache_dir}:/.cache/mozilla/firefox/{$profile}\" \
+        -v \"${HOME}/.mozilla/firefox/${profile}:/.mozilla/firefox/${profile}\" \
+        -v \"${HOME}/.mozilla/firefox/profiles.ini:/.mozilla/firefox/profiles.ini\" \
+        -v \"${HOME}/.local/share/buku/bookmarks.html:/bookmarks.html\" \
+        -v \"${HOME}/downloads:/Downloads\" \
+        -v \"/tmp/dummy/:/tmp/dummy\" \
+        $nvidia_opts \
+        --ipc=host \
+        --name $container_name \
+        cyberdummy/firefox -P $profile --class firefox-$profile \$@"
+
+    eval $cmd
+}
+
+firefox_pm(){
+    del_stopped firefox_pm
 
     docker run  -d \
         --user $(id -u) \
@@ -96,15 +166,11 @@ firefox(){
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         -e "DISPLAY=unix${DISPLAY}" \
         -e LANG=C \
-        -v "${HOME}/.firefox/cache:/.cache/mozilla" \
-        -v "${HOME}/.firefox/mozilla:/.mozilla" \
-        -v "${HOME}/downloads:/Downloads" \
-        --group-add $(getent group audio | cut -d: -f3) \
-        --device /dev/dri \
+        -v "${HOME}/.mozilla/firefox:/.mozilla/firefox" \
         --ipc=host \
-        --name firefox \
-        cyberdummy/firefox "$@"
-    }
+        --name firefox_pm \
+        cyberdummy/firefox --ProfileManager
+}
 
 rtv(){
     del_stopped rtv

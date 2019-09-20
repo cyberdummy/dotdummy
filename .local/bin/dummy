@@ -109,7 +109,7 @@ docker_launch() {
     elif [ "${action}" == "browser" ]
     then
         echo ${line:8} >> /tmp/dlaunch
-        qutebrowser "${line:8}"
+        firefox -P Tom "${line:8}"
     elif [ "${action}" == "feh" ]
     then
         feh ${line:4}
