@@ -92,11 +92,14 @@ create-pr() {
 
     local token=$(pass show github/cli-token)
 
+    # Accept type needed for draft PR to work
     curl -X POST \
         -H 'Content-type: application/json' \
+        -H 'Accept: application/vnd.github.shadow-cat-preview+json;q=0.9,*/*;q=0.8' \
         -d "$json" \
         -u "cyberdummy:$token" \
         "https://api.github.com/repos/${repo}/pulls"
+
 }
 
 

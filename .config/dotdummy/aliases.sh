@@ -8,6 +8,8 @@ alias nn='dummy nn'
 alias pdf='zathura'
 alias cdg='cd $(git root)'
 alias ll='ls -lah'
+alias yank='TZ='America/New_York' date'
+alias afk='i3lock -t -i ~/.local/share/wallpapers/cowboy-4k.jpg'
 # Get a command from recent history and copy to clipboard
 alias hist="fc -l -n -r -3000 | awk '{\$1=\$1};1' | fzf --print0 | xsel -b -i"
 

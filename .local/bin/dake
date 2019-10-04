@@ -85,5 +85,6 @@ source "$file"
 
 cmd="dake_$1"
 shift
+cmd="$cmd \"\$@\""
 
-eval $cmd $@
+eval $cmd

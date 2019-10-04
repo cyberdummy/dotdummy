@@ -50,7 +50,7 @@ setlocal path+=,,vendor/*/*/src
  " add include|require when I need to
 setlocal include=use\\s
 
-setlocal define=\\\(\\s\\\|\^\\\)\\\(function\\\|class\\\|trait\\\|interface\\\|abstract\\\)\\s
+setlocal define=\\\(\\s\\\|\^\\\)\\\(function\\\|class\\\|trait\\\|interface\\\|abstract\ class\\\)\\s
 "setlocal iskeyword+=$\\
 
 let b:undo_ftplugin .= '|setlocal includeexpr< isfname< suffixesadd< path<'

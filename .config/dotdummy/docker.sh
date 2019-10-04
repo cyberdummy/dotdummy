@@ -36,9 +36,7 @@ nvidia_options(){
         --device /dev/vga_arbiter \
         --device /dev/nvidia0 \
         --device /dev/nvidiactl \
-        --device /dev/nvidia-modeset \
-        --device /dev/nvidia-uvm \
-        --device /dev/nvidia-uvm-tools"
+        --device /dev/nvidia-modeset "
 }
 
 aws(){
@@ -121,7 +119,7 @@ firefox(){
     local state=$(docker inspect --format "{{.State.Running}}" $container_name 2>/dev/null)
 
     if [[ "$state" == "true" ]]; then
-        docker exec $container_name firefox "$@"
+        docker exec $container_name firefox -P $profile "$@"
         return
     fi
 
@@ -135,7 +133,6 @@ firefox(){
 
     local cmd="docker run  -d \
         --user $(id -u) \
-        --network desktop \
         -e PULSE_SERVER=pulseaudio \
         -v /etc/localtime:/etc/localtime:ro \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -153,6 +150,8 @@ firefox(){
         cyberdummy/firefox -P $profile --class firefox-$profile \$@"
 
     eval $cmd
+
+    docker network connect desktop $container_name
 }
 
 firefox_pm(){
