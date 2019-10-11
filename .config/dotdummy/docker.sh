@@ -625,7 +625,7 @@ mysql(){
         -v \"${HOME}/.my.cnf:/.my.cnf\" \
         --user $(id -u) \
         --entrypoint \"\"\
-        mysql:5.7 mysql \$@"
+        mysql:5.7 mysql \"\$@\""
 
     #echo $cmd
     eval $cmd
