@@ -43,6 +43,9 @@ super + Escape
 super + c
     xdotool search --onlyvisible -class Slack | xargs bspc node -f
 
+super + shift + c
+    id=$(xdotool search --onlyvisible -class Slack); (bspc node ${id} -d X && bspc desktop -f '^1') || bspc node ${id} -d VIII -f
+
 #
 # bspwm hotkeys
 #
