@@ -22,6 +22,7 @@ bspc rule -a URxvt:urxvt-scratch state=floating sticky=on center=on monitor=C
 bspc rule -a feh state=floating
 bspc rule -a qutebrowser desktop='^2'
 bspc rule -a mpv desktop='^4'
+bspc rule -a zoom desktop='^7'
 bspc rule -a Slack desktop='^9' focus=off
 
 # Default firefox to desktop 3

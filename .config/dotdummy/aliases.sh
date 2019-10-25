@@ -18,3 +18,13 @@ ssh(){
     local LOCAL_TERM=$(echo -n "$TERM" | sed -e s/tmux/screen/)
     env TERM=$LOCAL_TERM ssh "$@"
 }
+
+# Transform a zoom meeting URL into one to launch zoom with
+zoomzoom(){
+    local id=$(echo "$1" | cut -d '/' -f5 | cut -d '?' -f1)
+    local query=$(echo "$1" | cut -d '?' -f2)
+
+    local url="zoommtg://zoom.us/join?action=join&confno=$id&$query"
+
+    zoom "$url"
+}

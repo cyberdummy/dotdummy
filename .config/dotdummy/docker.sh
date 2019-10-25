@@ -568,7 +568,10 @@ qutebrowser(){
 
 zoom(){
     del_stopped zoom
+    docker stop pulseaudio
+    sleep 3
     relies_on pulseaudio
+    sleep 3
 
     docker run -d \
         -v /etc/localtime:/etc/localtime:ro \
@@ -576,15 +579,18 @@ zoom(){
         -e "DISPLAY=unix${DISPLAY}" \
         --network desktop \
         -e PULSE_SERVER=pulseaudio \
-        --group-add video \
+        --user $(id -u) \
+        --group-add $(getent group video | cut -d: -f3) \
         --group-add $(getent group audio | cut -d: -f3) \
         --device /dev/dri \
         --device /dev/video0 \
         -v /dev/shm:/dev/shm \
+        -v "${HOME}/.zoom:/.zoom" \
+        -v "${HOME}/.config/zoomus.conf:/.config/zoomus.conf" \
         --device /dev/snd \
         --name zoom \
         --runtime=nvidia \
-        cyberdummy/zoom
+        cyberdummy/zoom zoom "$@"
     }
 
 skype(){
