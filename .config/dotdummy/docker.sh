@@ -505,6 +505,33 @@ redshift(){
         cyberdummy/redshift "$@"
     }
 
+aslack(){
+    del_stopped slack
+
+    relies_on pulseaudio
+
+    local nvidia_opts=$(nvidia_options)
+
+    local cmd="docker run -d \
+        -v /etc/localtime:/etc/localtime:ro \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -e \"DISPLAY=unix${DISPLAY}\" \
+        -e PULSE_SERVER=pulseaudio \
+        --group-add $(getent group video | cut -d: -f3) \
+        --group-add $(getent group audio | cut -d: -f3) \
+        --device /dev/dri \
+        -v \"${HOME}/.slack:/root/.config/Slack\" \
+        -v \"${HOME}/downloads:/root/Downloads\" \
+        --network desktop \
+        $nvidia_opts \
+        --ipc=\"host\" \
+        --name slack \
+        cyberdummy/aslack \$@"
+
+    eval $cmd
+
+    }
+
 slack(){
     del_stopped slack
 
@@ -632,6 +659,7 @@ mysql(){
 
     local cmd="docker run -ti \
         --rm \
+        -e "TERM=screen-256color" \
         ${hist} \
         -v \"${HOME}/.inputrc:/.inputrc\" \
         -v \"${HOME}/.editrc:/.editrc\" \
