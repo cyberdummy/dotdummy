@@ -424,8 +424,8 @@ zathura(){
         cyberdummy/zathura "$file"
     }
 
-vdirsyncer() {
-    del_stopped vdirsyncer
+vdirsyncerd() {
+    del_stopped vdirsyncerd
 
     (
         export CONTACTS_PASS=$(pass show codeclick/nextcloud/contacts)
@@ -433,20 +433,66 @@ vdirsyncer() {
         docker run -d \
             -v "${HOME}/.local/share/vdirsyncer:/.local/share/vdirsyncer" \
             -v "${HOME}/.local/share/vdirsyncer/contacts:/.local/share/vdirsyncer/contacts" \
+            -v "${HOME}/.local/share/vdirsyncer/calendar:/.local/share/vdirsyncer/calendar" \
             -v "${HOME}/.config/vdirsyncer:/.config/vdirsyncer" \
             -e "CONTACTS_PASS" \
             -e "USER" \
             -e "TERM" \
             --user $(id -u) \
-            --name vdirsyncer \
+            --name vdirsyncerd \
             cyberdummy/vdirsyncer $@
+    )
+}
+
+notmuch() {
+    docker run -ti \
+        -v "${HOME}/.notmuch-config:/.notmuch-config" \
+        -v "${HOME}/mail:/mail" \
+        -e "USER" \
+        -e LANG="en_US.utf8" \
+        -e LC_ALL="C" \
+        -e "TERM" \
+        --entrypoint 'notmuch' \
+        --user $(id -u) \
+        cyberdummy/mbsync "$@"
+}
+
+khal() {
+    docker run -ti \
+        -v "${HOME}/.local/share/vdirsyncer:/.local/share/vdirsyncer" \
+        -v "${HOME}/.local/share/vdirsyncer/calendar:/.local/share/vdirsyncer/calendar" \
+        -v "${HOME}/.local/share/khal:/.local/share/khal" \
+        -v "${HOME}/.config/khal:/.config/khal" \
+        -e "USER" \
+        -e LANG="en_US.utf8" \
+        -e LC_ALL="C" \
+        -e "TERM=screen-256color" \
+        --user $(id -u) \
+        cyberdummy/khal khal "$@"
+}
+
+vdirsyncer() {
+    (
+        export CONTACTS_PASS=$(pass show codeclick/nextcloud/contacts)
+
+        docker run -ti \
+            -v "${HOME}/.local/share/vdirsyncer:/.local/share/vdirsyncer" \
+            -v "${HOME}/.local/share/vdirsyncer/contacts:/.local/share/vdirsyncer/contacts" \
+            -v "${HOME}/.local/share/vdirsyncer/calendar:/.local/share/vdirsyncer/calendar" \
+            -v "${HOME}/.config/vdirsyncer:/.config/vdirsyncer" \
+            -e "CONTACTS_PASS" \
+            -e "USER" \
+            -e "TERM" \
+            --user $(id -u) \
+            --entrypoint "vdirsyncer" \
+            cyberdummy/vdirsyncer "$@"
     )
 }
 
 khard() {
     del_stopped khard
 
-    relies_on vdirsyncer
+    relies_on vdirsyncerd
 
         docker run -ti \
             -v "${HOME}/.local/share/vdirsyncer/contacts:/.local/share/vdirsyncer/contacts" \
@@ -460,7 +506,7 @@ khard() {
 mutt() {
     del_stopped mutt
 
-    relies_on mbsync vdirsyncer
+    relies_on mbsync vdirsyncerd
 
     # the subshell stops the vars exposing, the export lets us pass to
     # container without exposing to processlist.
