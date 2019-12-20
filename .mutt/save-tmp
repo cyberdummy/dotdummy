@@ -1,10 +1,6 @@
 #!/bin/bash
 
-file="$(mktemp).html"
+file="$(mktemp)"
 echo "file://$file"
 
-exec > $file
-
-while IFS= read -r line; do
-  printf '%s\n' "$line"
-done
+cat > $file

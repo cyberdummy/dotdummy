@@ -133,6 +133,7 @@ firefox(){
     del_stopped $container_name
     relies_on pulseaudio
 
+    rm -f "${profile_dir}/places.sqlite*"
     local cache_dir="${HOME}/.mozilla/cache/firefox/${profile}"
     mkdir -p $cache_dir
 
@@ -225,6 +226,7 @@ pulseaudio(){
         --group-add $(getent group audio | cut -d: -f3) \
         --name pulseaudio \
         -v ${XDG_RUNTIME_DIR}/pulse/dnative:${XDG_RUNTIME_DIR}/pulse/native \
+        --volume /run/dbus/system_bus_socket:/run/dbus/system_bus_socket \
         cyberdummy/pulseaudio
 
     sleep 2
@@ -706,13 +708,15 @@ mysql(){
     local cmd="docker run -ti \
         --rm \
         -e "TERM=screen-256color" \
+        -e \"VISUAL=vim\" \
+        -e \"EDITOR=vim\" \
         ${hist} \
         -v \"${HOME}/.inputrc:/.inputrc\" \
         -v \"${HOME}/.editrc:/.editrc\" \
         -v \"${HOME}/.my.cnf:/.my.cnf\" \
         --user $(id -u) \
         --entrypoint \"\"\
-        mysql:5.7 mysql \"\$@\""
+        cyberdummy/mysql mysql \"\$@\""
 
     #echo $cmd
     eval $cmd
