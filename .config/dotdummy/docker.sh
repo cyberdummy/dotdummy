@@ -688,6 +688,40 @@ skype(){
         cyberdummy/skype
     }
 
+mysqlsh(){
+    local hist=""
+
+    if [[ -z ${MYSQL_HISTFILE+x} ]]; then
+        local MYSQL_HISTFILE="${HOME}/.mysql_history"
+    fi
+
+    if [[ ! -e $MYSQL_HISTFILE ]]; then
+        touch $MYSQL_HISTFILE
+    fi
+
+    if [[ -f $MYSQL_HISTFILE ]]; then
+        local hist="-v \"${MYSQL_HISTFILE}:/.mysqlsh/history.sql\""
+    fi
+
+    local cmd="docker run -ti \
+        --rm \
+        -e "TERM=screen-256color" \
+        -e \"EDITOR=vim -i NONE\" \
+        -e \"DISPLAY=vim -i NONE\" \
+        -e "PROMPT" \
+        -e \"PRODUCTION_SERVERS=testing\" \
+        -v \"${HOME}/.inputrc:/.inputrc\" \
+        -v \"${HOME}/.editrc:/.editrc\" \
+        -v \"${HOME}/.my.cnf:/.my.cnf\" \
+        -v \"${HOME}/.mysqlsh:/.mysqlsh\" \
+        ${hist} \
+        --user $(id -u) \
+        cyberdummy/mysqlsh \"\$@\""
+
+    #echo $cmd
+    eval $cmd
+}
+
 mysql(){
     local hist=""
 
@@ -708,15 +742,13 @@ mysql(){
     local cmd="docker run -ti \
         --rm \
         -e "TERM=screen-256color" \
-        -e \"VISUAL=vim\" \
-        -e \"EDITOR=vim\" \
         ${hist} \
         -v \"${HOME}/.inputrc:/.inputrc\" \
         -v \"${HOME}/.editrc:/.editrc\" \
         -v \"${HOME}/.my.cnf:/.my.cnf\" \
         --user $(id -u) \
         --entrypoint \"\"\
-        cyberdummy/mysql mysql \"\$@\""
+        mysql:5.7 mysql \"\$@\""
 
     #echo $cmd
     eval $cmd
