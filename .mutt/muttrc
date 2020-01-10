@@ -57,6 +57,7 @@ macro index,pager ss '<save-message>' 'Save message manually'
 
 # forwarding to todo lists - addresses come from kard server
 bind index,pager f noop
+set mime_forward = yes
 macro index,pager ff \
     '<forward-message>' \
     'Forward message'
