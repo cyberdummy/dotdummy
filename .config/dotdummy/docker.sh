@@ -292,6 +292,7 @@ play(){
     relies_on pulseaudio
 
     docker run  -d \
+        --rm \
         -v /etc/localtime:/etc/localtime:ro \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         -v "${HOME}/.config/mpv:/.config/mpv" \
@@ -306,15 +307,15 @@ play(){
         --user $(id -u) \
         -e PULSE_SERVER=pulseaudio \
         --runtime=nvidia \
-        --name mpv \
         cyberdummy/mpv "$@"
     }
 
 mpv(){
-    del_stopped mpv
+    #del_stopped mpv
     relies_on pulseaudio
 
     docker run  -d \
+        --rm \
         -v /etc/localtime:/etc/localtime:ro \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         -v "${HOME}/.config/mpv:/.config/mpv" \
@@ -327,7 +328,6 @@ mpv(){
         --user $(id -u) \
         -e PULSE_SERVER=pulseaudio \
         --runtime=nvidia \
-        --name mpv \
         cyberdummy/mpv "$@"
     }
 
@@ -750,7 +750,7 @@ mysql(){
         --entrypoint \"\"\
         mysql:5.7 mysql \"\$@\""
 
-    #echo $cmd
+    echo $@
     eval $cmd
 
     if [[ ! -z $tmp_dir ]]; then
