@@ -6,6 +6,9 @@
 super + Return
     urxvt
 
+super + shift + Return
+    alacritty
+
 # get a password
 super + q
     dummy menu pass
