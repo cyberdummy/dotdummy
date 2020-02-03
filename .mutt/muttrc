@@ -23,7 +23,7 @@ set sort_aux = reverse-last-date-received
 
 # urlscan likes to ignore the $BROWSER env for some reason
 macro index,pager \cu \
-    '<pipe-message>urlscan --run "$BROWSER \"{}\""<Enter>' \
+    '<pipe-message>LC_ALL=C urlscan --run "$BROWSER \"{}\""<Enter>' \
     'URL Scan'
 
 # using g as a "leader" for nav
@@ -91,11 +91,11 @@ macro attach sf \
 bind attach,compose g noop
 
 macro attach,compose gu \
-    '<pipe-message>urlscan --run "$BROWSER {}"<Enter>' \
+    '<pipe-message>LC_ALL=C urlscan --run "$BROWSER {}"<Enter>' \
     'URL Scan'
 
 macro attach,compose gc \
-    '<pipe-entry>urlscan --run "echo \"{}\" | xclip -r -i -selection clipboard"<Enter>' \
+    '<pipe-entry>LC_ALL=C urlscan --run "echo \"{}\" | xclip -r -i -selection clipboard"<Enter>' \
     'URL Scan to clipboard'
 
 # open this part in browser
