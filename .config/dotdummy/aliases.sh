@@ -12,6 +12,8 @@ alias yank='TZ='America/New_York' date'
 alias afk='i3lock -t -i ~/.local/share/wallpapers/cowboy-4k.jpg'
 # Get a command from recent history and copy to clipboard
 alias hist="fc -l -n -r -3000 | awk '{\$1=\$1};1' | fzf --print0 | xsel -b -i"
+alias dark="sed -i 's/colors: \*light/colors: \*dark/g' ~/.config/alacritty/alacritty.yml"
+alias light="sed -i 's/colors: \*dark/colors: \*light/g' ~/.config/alacritty/alacritty.yml"
 
 # older servers dont know the tmux TERM type
 ssh(){
