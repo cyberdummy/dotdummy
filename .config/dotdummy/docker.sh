@@ -139,7 +139,7 @@ firefox(){
 
     local nvidia_opts=$(nvidia_options)
 
-    local cmd="docker run  -d \
+    local cmd="docker run -d  \
         --user $(id -u) \
         -e PULSE_SERVER=pulseaudio \
         -v /etc/localtime:/etc/localtime:ro \
@@ -152,6 +152,7 @@ firefox(){
         -v \"${HOME}/.local/share/buku/bookmarks.html:/bookmarks.html\" \
         -v \"${HOME}/downloads:/Downloads\" \
         -v \"/tmp/dummy/:/tmp/dummy\" \
+        --tmpfs /dev/shm \
         $nvidia_opts \
         --ipc=host \
         --name $container_name \
@@ -300,13 +301,10 @@ play(){
         -e "DISPLAY=${DISPLAY}" \
         -v "$(pwd):/workspace" \
         --workdir /workspace \
-        --group-add $(getent group audio | cut -d: -f3) \
-        --group-add video \
-        --device /dev/dri \
         --network desktop \
         --user $(id -u) \
         -e PULSE_SERVER=pulseaudio \
-        --runtime=nvidia \
+        --ipc host \
         cyberdummy/mpv "$@"
     }
 
@@ -314,21 +312,23 @@ mpv(){
     #del_stopped mpv
     relies_on pulseaudio
 
-    docker run  -d \
+    local nvidia_opts=$(nvidia_options)
+
+    local cmd="docker run  -d \
         --rm \
         -v /etc/localtime:/etc/localtime:ro \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v "${HOME}/.config/mpv:/.config/mpv" \
-        -v "${HOME}/.config/mpv/mpv.conf:/.config/mpv/mpv.conf" \
-        -e "DISPLAY=${DISPLAY}" \
-        --group-add $(getent group audio | cut -d: -f3) \
-        --group-add video \
-        --device /dev/dri \
+        -v \"${HOME}/.config/mpv:/.config/mpv\" \
+        -v \"${HOME}/.config/mpv/mpv.conf:/.config/mpv/mpv.conf\" \
+        -e \"DISPLAY=${DISPLAY}\" \
+        --ipc host \
         --network desktop \
         --user $(id -u) \
         -e PULSE_SERVER=pulseaudio \
-        --runtime=nvidia \
-        cyberdummy/mpv "$@"
+        $nvidia_opts \
+        cyberdummy/mpv \"\$@\""
+
+    eval $cmd
     }
 
 twitchy(){
@@ -553,7 +553,7 @@ redshift(){
         cyberdummy/redshift "$@"
     }
 
-aslack(){
+slack(){
     del_stopped slack
 
     relies_on pulseaudio
@@ -565,40 +565,16 @@ aslack(){
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         -e \"DISPLAY=unix${DISPLAY}\" \
         -e PULSE_SERVER=pulseaudio \
-        --group-add $(getent group video | cut -d: -f3) \
-        --group-add $(getent group audio | cut -d: -f3) \
-        --device /dev/dri \
         -v \"${HOME}/.slack:/root/.config/Slack\" \
         -v \"${HOME}/downloads:/root/Downloads\" \
         --network desktop \
         $nvidia_opts \
         --ipc=\"host\" \
         --name slack \
-        cyberdummy/aslack \$@"
+        cyberdummy/slack \$@"
 
     eval $cmd
 
-    }
-
-slack(){
-    del_stopped slack
-
-    relies_on pulseaudio
-
-    docker run -d \
-        -v /etc/localtime:/etc/localtime:ro \
-        -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -e "DISPLAY=unix${DISPLAY}" \
-        --device /dev/dri \
-        --group-add audio \
-        --group-add video \
-        -v "${HOME}/.slack:/root/.config/Slack" \
-        -v "${HOME}/downloads:/root/Downloads" \
-        --network desktop \
-        -e PULSE_SERVER=pulseaudio \
-        --ipc="host" \
-        --name slack \
-        cyberdummy/slack "$@"
     }
 
 qutebrowser(){
