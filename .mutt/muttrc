@@ -94,7 +94,7 @@ macro attach,compose gu \
     '<pipe-message>LC_ALL=C urlscan --run "$BROWSER {}"<Enter>' \
     'URL Scan'
 
-macro attach,compose gc \
+macro attach,compose,index,pager gc \
     '<pipe-entry>LC_ALL=C urlscan --run "echo \"{}\" | xclip -r -i -selection clipboard"<Enter>' \
     'URL Scan to clipboard'
 
