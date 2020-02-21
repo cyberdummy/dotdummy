@@ -6,7 +6,13 @@ runtime macros/matchit.vim
 
 " Appearance {{{
 
-set background=dark
+let shellcmd = 'grep "colors: \*light" ~/.config/alacritty/alacritty.yml'
+let output=system(shellcmd)
+if !v:shell_error
+    set background=light
+else
+    set background=dark
+endif
 colorscheme solarized_custom
 " Fix undercurl
 set t_Cs=

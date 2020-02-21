@@ -1,7 +1,7 @@
 runtime colors/solarized.vim
 
 function! MyHighlights() abort
-    highlight SpecialKey ctermbg=8
+    highlight SpecialKey ctermbg=NONE
     highlight Conceal ctermfg=10
     highlight Comment cterm=italic
     highlight CursorLineNr cterm=None
