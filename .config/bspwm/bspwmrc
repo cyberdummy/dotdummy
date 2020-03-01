@@ -29,3 +29,5 @@ bspc rule -a Slack desktop='^9' focus=off
 bspc rule -a *:Navigator desktop='^3'
 # Personal firefox to 2
 bspc rule -a firefox-Tom desktop='^2'
+# Slack Firefox
+bspc rule -a firefox-Slack desktop='^9'

@@ -26,9 +26,14 @@ zoomzoom(){
     local id=$(echo "$1" | cut -d '/' -f5 | cut -d '?' -f1)
     local query=$(echo "$1" | cut -d '?' -f2)
 
+    local running=$(docker ps | grep zoom | wc -l)
     local url="zoommtg://zoom.us/join?action=join&confno=$id&$query"
 
-    zoom "$url"
+    if [ "$running" -eq "1" ]; then
+        docker exec zoom zoom "$url"
+    else
+        zoom "$url"
+    fi
 }
 
 countdown(){
