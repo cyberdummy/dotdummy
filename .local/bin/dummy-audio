@@ -91,6 +91,14 @@ headphones() {
     move_inputs_to_sink $default
 }
 
+# Go to monitor source
+monitor() {
+    local monitor=$(find_monitor_sink)
+
+    pactl set-default-sink $monitor
+    move_inputs_to_sink $monitor
+}
+
 # Toggle between monitor & bluetooth ear buds
 blue() {
     local headphones=$(find_blue_sink)
@@ -138,6 +146,8 @@ case "$command" in
     headphones; exit 0 ;;
   blue)
     blue; exit 0 ;;
+  monitor)
+    monitor; exit 0 ;;
   *)
     echo "`basename "$0"` $command: unknown command." >&2
     exit 1
