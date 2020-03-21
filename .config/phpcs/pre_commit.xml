@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset name="Pre Commit" namespace="Tom\PreCommit">
+ <description>Dont let me commit this</description>
+
+ <rule ref="Generic.PHP.ForbiddenFunctions">
+  <properties>
+   <property name="forbiddenFunctions" type="array">
+    <element key="delete" value="unset"/>
+    <element key="print" value="null"/>
+    <element key="echo" value="null"/>
+    <element key="create_function" value="null"/>
+   </property>
+  </properties>
+ </rule>
+
+</ruleset>
