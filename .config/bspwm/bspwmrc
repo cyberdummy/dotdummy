@@ -6,7 +6,7 @@ sxhkd &
 # Setup "Desktops" (workspaces) and make sure monitors are in order
 bspc monitor DP-4 -d I II III IV V VI VII VIII
 bspc monitor DP-0 -d X
-bspc monitor DP-4 -s DP-0
+#bspc monitor DP-4 -s DP-0
 
 # Everything below came as default
 bspc config border_width         2
