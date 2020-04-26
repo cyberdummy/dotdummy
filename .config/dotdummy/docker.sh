@@ -417,7 +417,7 @@ feh(){
     docker run \
         --rm \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v "${HOME}/.local/share/bg.jpg:/root/bg.jpg" \
+        -v "${HOME}/.local/share/wallpapers/bg.jpg:/root/bg.jpg" \
         -v "$(pwd):/workspace" \
         --workdir /workspace \
         -e "DISPLAY=unix${DISPLAY}" \
