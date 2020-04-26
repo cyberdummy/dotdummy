@@ -59,8 +59,22 @@ ctags(){
 }
 
 phpcsfixer(){
-    docker run --rm --user $(id -u) -v=$(pwd):/workspace cyberdummy/phpcsfixer $@
+    docker run --rm \
+        --user $(id -u) \
+        -v=$(pwd):/workspace \
+        --entrypoint "/bin/php-cs-fixer" \
+        cyberdummy/phpcs $@
 }
+
+psalm(){
+    docker run --rm \
+        --user $(id -u) \
+        -v=$(pwd):/workspace \
+        -v="${HOME}/.config/phpcs:/.config/phpcs" \
+        --entrypoint "/bin/psalm" \
+        cyberdummy/phpcs "$@"
+}
+
 
 phpcs(){
     docker run --rm \
