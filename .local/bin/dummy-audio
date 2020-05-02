@@ -45,6 +45,10 @@ find_blue_sink() {
     find_sink "bluez_sink\."
 }
 
+find_jack_sink() {
+    find_sink "motherboard\.analog-stereo"
+}
+
 find_monitor_sink() {
     find_sink "\.hdmi\."
 }
@@ -116,6 +120,23 @@ blue() {
     move_inputs_to_sink $default
 }
 
+# Toggle between monitor & plugged into headphone jack
+jack() {
+    local headphones=$(find_jack_sink)
+    local monitor=$(find_monitor_sink)
+
+    # if on blue go to monitor
+    if [[ $(default_sink_index) = $headphones ]]; then
+        pactl set-default-sink $monitor
+        local default=$monitor
+    else
+        pactl set-default-sink $headphones
+        local default=$headphones
+    fi
+
+    move_inputs_to_sink $default
+}
+
 # Toggle mute on default sink and all other sinks
 mute() {
     pactl set-sink-mute @DEFAULT_SINK@ toggle
@@ -148,6 +169,8 @@ case "$command" in
     blue; exit 0 ;;
   monitor)
     monitor; exit 0 ;;
+ jack)
+     jack; exit 0 ;;
   *)
     echo "`basename "$0"` $command: unknown command." >&2
     exit 1
