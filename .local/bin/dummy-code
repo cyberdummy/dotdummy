@@ -30,6 +30,30 @@ lint-python() {
     pylint --reports=n --output-format=parseable $1
 }
 
+show-repos() {
+    local repos=""
+
+    for ((i=1; ; i+=1)); do
+        contents=$(curl \
+            -H "Authorization: token $(pass show github/cli-token)" \
+            -s "https://api.github.com/user/repos?per_page=100&page=$i" \
+            | jq -r '.[].full_name')
+        repos+="$contents"
+
+        lines=$(echo "$contents" | wc -l)
+
+        if [[ $lines -lt 100 ]]; then
+            break
+        fi
+    done
+
+    echo "$repos"
+}
+
+choose-repo() {
+    show-repos | fzf
+}
+
 create-pr() {
     local title base head send repo
 
@@ -117,6 +141,8 @@ case "$command" in
         lint-python $@; exit 0 ;;
     create-pr)
         create-pr $@; exit 0 ;;
+    repo)
+        choose-repo $@; exit 0 ;;
     *)
         echo "`basename "$0"` $command: unknown command." >&2
         exit 1

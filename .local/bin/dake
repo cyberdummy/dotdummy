@@ -10,6 +10,8 @@ if [[ -r "$file" ]] && [[ -f "$file" ]]; then
     source "$file"
 fi
 
+# To put/remove configuration files for a project
+# $ dake stow folder/in/projects
 if [[ ! -z ${1+x} ]] && ([[ $1 == "stow" ]] || [[ $1 == "unstow" ]]); then
     if [[ -z ${2+x} ]]; then
         echo "Must supply package name" >&2
@@ -43,6 +45,52 @@ if [[ ! -z ${1+x} ]] && ([[ $1 == "stow" ]] || [[ $1 == "unstow" ]]); then
         rm $ignore_file
     fi
 
+    exit 0
+fi
+
+# Setup a project
+if [[ ! -z ${1+x} ]] && [[ $1 == "setup" ]]; then
+    repo=$(dummy-code repo)
+
+    if [[ "$repo" == "" ]]; then
+        echo "No repo selected"
+        exit 1
+    fi
+
+    dir=$(echo "$repo" | awk -F '/' '{print $2}')
+    git clone "git@github.com:${repo}"
+    cd $dir
+
+    # Select a config
+    configs=""
+    while IFS="/" read -ra arr; do
+        conf=""
+        after=0
+        for i in "${arr[@]}"; do
+            if [[ $i == 'dakefile' ]]; then
+                break
+            fi
+
+            if [[ $after == "1" ]]; then
+                conf="${conf}${i}/"
+            fi
+
+            if [[ $i == "projects" ]]; then
+                after=1
+            fi
+        done
+        configs+=${conf::-1}
+        configs+=$'\n'
+    done < <(find ~/.config/dotdummy/projects -follow -name 'dakefile')
+
+    selected=$(echo "$configs" | fzf)
+
+    if [[ "$selected" == "" ]]; then
+        echo "No config chosen"
+        exit 0
+    fi
+
+    dake stow $selected
     exit 0
 fi
 
