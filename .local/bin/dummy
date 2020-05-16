@@ -66,7 +66,7 @@ nn() {
     pass git push
 
     # documents add and push
-    if [[ -d $HOME/documents ]]; then
+    if [[ -d $HOME/documents/.git ]]; then
         local docs="${HOME}/documents"
         (
             cd $docs && \

@@ -17,5 +17,5 @@ done
 if [[ ! -z "$IS_MAC" ]]; then
     export CLICOLOR=YES
     export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
-    gpg-agent --daemon 2> /dev/null
+    gpg-agent --daemon --pinentry-program /usr/local/bin/pinentry-mac 2> /dev/null
 fi
