@@ -35,6 +35,10 @@ bookmarks() {
     | nohup xclip -r -sel clip &> /dev/null
 }
 
+battery() {
+    acpi -b | grep Bat | grep -m 1 -Eo " [0-9]+%" 2> /dev/null
+}
+
 scratchpad() {
     local SCRID=urxvt-scratch
     local focused=$(xdotool getactivewindow)
@@ -130,6 +134,8 @@ case "$command" in
         pass_fuzz; exit 0 ;;
     bookmarks)
         bookmarks; exit 0 ;;
+    battery)
+        battery; exit 0 ;;
     scratch)
         scratchpad; exit 0 ;;
     nn)
