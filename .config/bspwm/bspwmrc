@@ -4,8 +4,8 @@
 sxhkd &
 
 # Setup "Desktops" (workspaces) and make sure monitors are in order
-bspc monitor DP-4 -d I II III IV V VI VII VIII
-bspc monitor DP-0 -d X
+bspc monitor DP-4 -d main browser workbrowser media five six zoom eight
+bspc monitor DP-0 -d slack
 #bspc monitor DP-4 -s DP-0
 
 # Everything below came as default
@@ -20,14 +20,11 @@ bspc config focus_follows_pointer true
 bspc rule -a URxvt:urxvt-fuzzy state=floating sticky=on center=on monitor=C
 bspc rule -a URxvt:urxvt-scratch state=floating sticky=on center=on monitor=C
 bspc rule -a feh state=floating
-bspc rule -a qutebrowser desktop='^2'
-bspc rule -a mpv desktop='^4'
-bspc rule -a zoom desktop='^7'
-bspc rule -a Slack desktop='^9' focus=off
+bspc rule -a mpv desktop='media'
+bspc rule -a zoom desktop='zoom'
+bspc rule -a Slack desktop='slack' focus=off
 
 # Default firefox to desktop 3
-bspc rule -a *:Navigator desktop='^3'
+bspc rule -a *:Navigator desktop='workbrowser'
 # Personal firefox to 2
-bspc rule -a firefox-Tom desktop='^2'
-# Slack Firefox
-bspc rule -a firefox-Slack desktop='^9'
+bspc rule -a firefox-Tom desktop='browser'
