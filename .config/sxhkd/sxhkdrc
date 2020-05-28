@@ -34,8 +34,12 @@ super + @u
 super + @y
     xdotool type --clearmodifiers 'tom.westcott@gmail.com' && xdotool keyup Super_L
 
-# make sxhkd reload its configuration files:
+#  reexecute the bspwm config
 super + Escape
+    ~/.config/bspwm/bspwmrc
+
+# make sxhkd reload its configuration files:
+super + shift + Escape
     pkill -USR1 -x sxhkd
 
 #
@@ -46,8 +50,9 @@ super + Escape
 super + c
     xdotool search --onlyvisible -class Slack | xargs bspc node -f
 
+# focus on slack on desktop thats on main monitor
 super + shift + c
-    id=$(xdotool search --onlyvisible -class Slack); (bspc node ${id} -d X && bspc desktop -f '^1') || bspc node ${id} -d VIII -f
+    id=$(xdotool search --onlyvisible -class Slack); (bspc node ${id} -d slack && bspc desktop -f main) || bspc node ${id} -d eight -f
 
 #
 # bspwm hotkeys

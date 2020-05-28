@@ -1,11 +1,19 @@
-#! /bin/sh
+#! /bin/bash
 
 # Start the hotkey daemon ~/.config/sxhkd/sxhkdrc
 sxhkd &
 
 # Setup "Desktops" (workspaces) and make sure monitors are in order
-bspc monitor DP-4 -d main browser workbrowser media five six zoom eight
-bspc monitor DP-0 -d slack
+if xrandr | grep eDP1; then
+    if xrandr | grep DP1; then
+        . ~/.config/bspwm/macbookmonrc
+    else
+        . ~/.config/bspwm/macbookrc
+    fi
+else
+    bspc monitor DP-4 -d main browser workbrowser media five six zoom eight
+    bspc monitor DP-0 -d slack
+fi
 #bspc monitor DP-4 -s DP-0
 
 # Everything below came as default

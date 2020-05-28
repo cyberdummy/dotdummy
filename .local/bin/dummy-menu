@@ -4,7 +4,7 @@ set -euo pipefail
 bookmarks_menu() {
     local win=$(xdotool getactivewindow)
     xdotool search --onlyvisible --classname urxvt-fuzzy windowkill || true
-    bspc monitor -f primary
+    bspc monitor -f $(bspc query -M --names -d main)
     urxvt -name urxvt-fuzzy \
         -bg '#fdf6e3' \
         -fg '#657b83' \
@@ -18,7 +18,7 @@ bookmarks_menu() {
 open_fuzz() {
     local win=$(xdotool getactivewindow)
     xdotool search --onlyvisible --classname urxvt-fuzzy windowkill || true
-    bspc monitor -f primary
+    bspc monitor -f $(bspc query -M --names -d main)
     urxvt -name urxvt-fuzzy \
         -bg '#fdf6e3' \
         -fg '#657b83' \
