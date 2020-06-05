@@ -1,6 +1,6 @@
-TAB: menu-complete
+TAB: complete
 
-set show-mode-in-prompt on
+#set show-mode-in-prompt on
 #set editing-mode vi
 set completion-ignore-case on
 
