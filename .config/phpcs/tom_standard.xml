@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <ruleset name="Toms Standard" namespace="Tom\Standard">
     <description>Mostly PSR2 with some extras</description>
+    <config name="installed_paths" value="/composer/vendor/slevomat/coding-standard"/>
+    <autoload>/composer/vendor/autoload.php</autoload>
     <rule ref="PSR2"/>
-
-        <!-- String concat dont put vars in "" -->
-    <rule ref="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
 
         <!-- Avoid using double quotes -->
     <rule ref="Squiz.Strings.DoubleQuoteUsage"/>
+        <!-- String concat dont put vars in "" -->
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
 
         <!-- Comments on functions, variables, classes & files -->
     <rule ref="Squiz.Commenting.FunctionComment.Missing">
@@ -20,6 +21,17 @@
         <exclude-pattern>*Test.php</exclude-pattern>
     </rule>
 
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint"/>
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="list" value="[]"/>
+            </property>
+        </properties>
+    </rule>
     <!-- Variables should be camel -->
     <!-- <rule ref="Squiz.NamingConventions.ValidVariableName.NotCamelCaps"/> -->
     <!-- <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps"/> -->
