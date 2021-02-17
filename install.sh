@@ -64,6 +64,7 @@ create_skeleton() {
     '.vim/cache'
     '.vim/cache/backups'
     '.vim/cache/swaps'
+    '.vim/cache/undo'
     '.config/twitchy3'
     '.newsboat'
     '.mutt/mailboxes'

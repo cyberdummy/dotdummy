@@ -13,5 +13,5 @@ if [[ -f ~/.config/dotdummy/docker.sh ]]; then
     redshift
 fi
 
-feh --bg-scale /root/bg.jpg
+feh --bg-scale ~/.local/share/bg.jpg
 exec bspwm
