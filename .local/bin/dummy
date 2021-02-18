@@ -52,6 +52,11 @@ scratchpad() {
     local scratch=$(xdotool search --classname $SCRID)
 
     if [[ -n $scratch ]]; then
+        local win="scratch"
+        if [[ ! -z ${1+x} ]]; then
+            win=$1
+        fi
+        tmux select-window -t scratch:$win || tmux new-window -t scratch -n $1
         if [[ $focused == $scratch ]]; then
             bspc node -g hidden
             #tmux kill-session -t scratch
@@ -159,7 +164,7 @@ case "$command" in
     battery)
         battery; exit 0 ;;
     scratch)
-        scratchpad; exit 0 ;;
+        scratchpad "$@"; exit 0 ;;
     nn)
         nn; exit 0 ;;
     home)

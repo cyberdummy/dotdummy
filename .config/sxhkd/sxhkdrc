@@ -24,6 +24,9 @@ super + b
 # scratch pad term
 super + e
     dummy scratch
+# daily report
+super + r
+    dummy scratch report
 
 # get a named clipboard
 super + v
