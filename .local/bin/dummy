@@ -15,19 +15,26 @@ pass_fuzz() {
     password_files=( "${password_files[@]#"$prefix"/}" )
     password_files=( "${password_files[@]%.gpg}" )
 
-    password=$(printf '%s\n' "${password_files[@]}" | fzf )
+    password=$(printf '%s\n' "${password_files[@]}" | fzf --prompt 'Copy pass > ')
 
     nohup pass show -c $password &> /dev/null
 }
 
+otp_fuzz() {
+    shopt -s nullglob globstar
+
+    prefix=${PASSWORD_STORE_DIR-~/.password-store}
+    password_files=( "$prefix"/**/*.gpg )
+    password_files=( "${password_files[@]#"$prefix"/}" )
+    password_files=( "${password_files[@]%.gpg}" )
+
+    password=$(printf '%s\n' "${password_files[@]}" | grep otp | fzf --prompt 'Copy OTP > ')
+
+    nohup pass otp -c $password &> /dev/null
+}
+
 bookmarks() {
-    docker run --rm \
-        --name buku \
-        -e BROWSER="browser" \
-        -v ${XDG_RUNTIME_DIR}/cyberdummy/dlaunch:/tmp/dlaunch \
-        -v "${HOME}/.local/share/buku:/.local/share/buku" \
-        --user $(id -u) \
-        cyberdummy/buku -p -f 4 \
+    buku -p -f 4 \
     | tail -n +2 \
     | sed 's/\t/ /g' \
     | fzf \
@@ -92,11 +99,24 @@ nn() {
         if hash pacman 2>/dev/null; then
             sudo pacman --noconfirm --color always -Syu
         fi
+
+        if hash docker 2>/dev/null; then
+            docker pull amazon/aws-cli:latest
+            docker system prune -f
+        fi
+
+        if hash pip 2>/dev/null; then
+            pip install --upgrade -r ~/.config/pip/requirements.txt
+        fi
+
+        if hash composer 2>/dev/null; then
+            composer global update
+        fi
     fi
 
-    # systemctl shutdown
-    # systemctl poweroff -i
-    reboot
+    #systemctl shutdown
+    systemctl poweroff -i
+    # reboot
 }
 
 
@@ -132,6 +152,8 @@ case "$command" in
         exec "$HOME/.local/bin/dummy-menu" "$@" ;;
     pass)
         pass_fuzz; exit 0 ;;
+    otp)
+        otp_fuzz; exit 0 ;;
     bookmarks)
         bookmarks; exit 0 ;;
     battery)
