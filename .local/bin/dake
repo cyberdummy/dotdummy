@@ -19,6 +19,7 @@ if [[ ! -z ${1+x} ]] && ([[ $1 == "stow" ]] || [[ $1 == "unstow" ]]); then
         exit 1
     fi
 
+    pkg=$(realpath $pkg)
     flags=""
 
     if [[ $1 == "unstow" ]]; then
@@ -26,14 +27,19 @@ if [[ ! -z ${1+x} ]] && ([[ $1 == "stow" ]] || [[ $1 == "unstow" ]]); then
     fi
 
     ignore_file="${pkg}/.stow-local-ignore"
+    git_dir="${pkg}/dot-git"
 
     if [[ ! -f $ignore_file ]]; then
         touch $ignore_file
     fi
 
-    stow $flags --ignore '^docker$' --no-folding -d $pkg -t $(pwd) .
+    stow $flags --ignore '^docker$' --ignore '^tom-notes$' --ignore '^dot-git$' --no-folding -d $pkg -t $(pwd) .
 
-    stow $flags -d $pkg -t $(pwd) .
+    stow $flags --ignore '^dot-git$' -d $pkg -t $(pwd) .
+
+    if [[ -d $git_dir ]]; then
+        stow $flags --no-folding -d $git_dir -t $(pwd)/.git .
+    fi
 
     if [[ ! -s $ignore_file ]]; then
         rm $ignore_file
