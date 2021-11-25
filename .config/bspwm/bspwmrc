@@ -1,6 +1,7 @@
 #! /bin/bash
 
 # Start the hotkey daemon ~/.config/sxhkd/sxhkdrc
+killall sxhkd
 sxhkd &
 
 # Start polybar
