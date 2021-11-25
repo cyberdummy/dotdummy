@@ -15,7 +15,7 @@ for lang in en_GB.utf8 en_US.utf8; do
     fi
 done
 
-if [[ -n "$IS_MAC" ]]; then
+if [[ -n "${IS_MAC-}" ]]; then
     export CLICOLOR=YES
     export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
     gpg-agent --daemon --pinentry-program /usr/local/bin/pinentry-mac 2> /dev/null
