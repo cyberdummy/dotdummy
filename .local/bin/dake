@@ -4,12 +4,6 @@ set -euo pipefail
 # Script to act as a project utility command runner like make but shell scripts
 # just place a file called "dakefile" with commands in it to run
 
-file=~/.config/dotdummy/docker.sh
-
-if [[ -r "$file" ]] && [[ -f "$file" ]]; then
-    source "$file"
-fi
-
 # To put/remove configuration files for a project
 # $ dake stow folder/in/projects
 if [[ ! -z ${1+x} ]] && ([[ $1 == "stow" ]] || [[ $1 == "unstow" ]]); then
