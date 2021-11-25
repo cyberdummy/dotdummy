@@ -17,7 +17,6 @@ else
     bspc monitor DP-4 -d main browser workbrowser media five six zoom eight
     bspc monitor DP-0 -d slack
 fi
-#bspc monitor DP-4 -s DP-0
 
 # Everything below came as default
 bspc config border_width         2
@@ -29,13 +28,26 @@ bspc config gapless_monocle      true
 bspc config focus_follows_pointer true
 
 bspc rule -a URxvt:urxvt-fuzzy state=floating sticky=on center=on monitor=C
+bspc rule -a URxvt:urxvt-float state=floating sticky=on center=on monitor=C
 bspc rule -a URxvt:urxvt-scratch state=floating sticky=on center=on monitor=C
 bspc rule -a feh state=floating
+bspc rule -a Zathura state=tiled
+
+# Firefox to desktop #2
+bspc rule -a *:Navigator desktop='browser'
+
+# Work firefox to desktop #3
+bspc rule -a browser-work desktop='workbrowser'
+
+# Media desktop #4
 bspc rule -a mpv desktop='media'
+bspc rule -a *:music desktop='media'
+
+# Zoom desktop #7
 bspc rule -a zoom desktop='zoom'
+bspc rule -a Skype desktop='zoom'
+
+# Slack to side monitor, desktop #9
 bspc rule -a Slack desktop='slack' focus=off
 
-# Default firefox to desktop 3
-bspc rule -a *:Navigator desktop='workbrowser'
-# Personal firefox to 2
-bspc rule -a firefox-Tom desktop='browser'
+bspc config external_rules_command ~/.config/bspwm/external_rules.sh
