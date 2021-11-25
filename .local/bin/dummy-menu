@@ -34,6 +34,10 @@ pass_menu() {
     open_fuzz "dummy pass"
 }
 
+otp_menu() {
+    open_fuzz "dummy otp"
+}
+
 dlip_get_menu() {
     open_fuzz "dlip get"
 }
@@ -51,6 +55,8 @@ shift
 case "$command" in
     pass)
         pass_menu; exit 0 ;;
+    otp)
+        otp_menu; exit 0 ;;
     dlip_get)
         dlip_get_menu; exit 0 ;;
     dlip_save)
