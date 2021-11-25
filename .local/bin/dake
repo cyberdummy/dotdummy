@@ -97,6 +97,9 @@ fi
 file="$(pwd)/dakefile"
 
 if [[ ! -r "$file" ]]; then
+    if [[ $1 == "is_live" ]]; then
+      exit
+    fi
     echo "No dakefile found, use: (dake [un]stow [package]) to setup" >&2
     exit
 fi
@@ -133,6 +136,11 @@ source "$file"
 
 cmd="dake_$1"
 shift
+
 cmd="$cmd \"\$@\""
 
-eval $cmd
+if [[ $cmd == "dake_is_live \"\$@\"" ]]; then
+  eval $cmd 2> /dev/null
+else
+  eval $cmd
+fi

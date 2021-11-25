@@ -37,7 +37,13 @@ set sidescrolloff=5 " show 5 columns around current column always
 
 " Status line functions in .vim/plugin/my_status_line.vim
 set laststatus=2 " always show a statusline
-let &statusline='  [%{mode()}] %-f %-M %=%{MyLinterStatus()} [LL:%{LocationListStatus()}] [QF:%{QuickFixStatus()}]  '
+
+augroup IsLiveStatus
+    autocmd!
+    autocmd BufEnter,BufWritePost * let b:isLive = IsLive() | silent redraw!
+augroup END
+
+let &statusline='  [%{mode()}] %-f %-M %=%{MyLinterStatus()} [LL:%{LocationListStatus()}] [QF:%{QuickFixStatus()}] %{%exists("b:isLive")?b:isLive:"unknown"%} '
 
 " Folding - http://vimcasts.org/episodes/how-to-fold/
 set foldenable
