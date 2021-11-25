@@ -117,7 +117,7 @@ create-pr() {
         --arg body "$description" \
         '{title: $title, body: $body, head: $head, base: $base, draft: true }')
 
-    local token=$(pass show github/cli-token)
+    local token=$(pass show github/cli-token | head -n 1)
 
     # Accept type needed for draft PR to work
     curl -X POST \
