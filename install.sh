@@ -51,23 +51,28 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 create_skeleton() {
     # These are folders we dont want to be symlinks
     local folders=(
-    '.local/share'
-    '.local/bin'
-    '.ssh'
-    '.config/systemd/user'
-    '.config/transmission-daemon'
-    '.config/qutebrowser'
+    '.config/composer'
     '.config/dotdummy'
     '.config/dotdummy/projects'
+    '.config/qutebrowser'
+    '.config/systemd/user'
+    '.config/transmission-daemon'
+    '.config/twitchy3'
     '.gnupg'
+    '.local/bin'
+    '.local/share'
+    '.local/share/applications'
+    '.local/share/fonts/otf'
+    '.local/share/fonts/ttf'
+    '.mutt/mailboxes'
+    '.newsboat'
+    '.ssh'
     '.urxvt'
     '.vim/cache'
     '.vim/cache/backups'
     '.vim/cache/swaps'
     '.vim/cache/undo'
-    '.config/twitchy3'
-    '.newsboat'
-    '.mutt/mailboxes'
+    '.vim/sessions'
     )
 
     local count=0
