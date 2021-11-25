@@ -1,5 +1,6 @@
 URxvt.cursorBlink: true
-URxvt.letterSpace: 1
+URxvt.letterSpace: 0
+URxvt*dynamicColors: on
 
 ! Do not need scrollback -- using tmux
 URxvt.saveLines: 0
