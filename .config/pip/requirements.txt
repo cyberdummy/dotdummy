@@ -1,0 +1,10 @@
+buku
+docker-compose
+khal
+vdirsyncer
+streamlink
+khard
+pillow
+reportlab
+qmk
+tvnamer
