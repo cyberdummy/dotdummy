@@ -120,6 +120,10 @@ nn() {
         if hash composer 2>/dev/null; then
             composer global update
         fi
+
+        if hash flatpak 2>/dev/null; then
+            flatpak update -y
+        fi
     fi
 
     #systemctl shutdown
