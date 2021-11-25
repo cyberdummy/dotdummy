@@ -19,3 +19,9 @@ for file in ~/.config/dotdummy/{exports.sh,aliases.sh,bash_prompt.sh,docker.sh};
     fi
 done
 unset file
+
+TMUX_SESSION=$(tmux display-message -p '#S')
+if [[ "$TMUX_SESSION" != "scratch" && -x "$(command -v fish)" ]]; then
+  fish
+  exit
+fi
