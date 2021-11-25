@@ -5,7 +5,7 @@ alternates \
 set my_tom_pass = `[ -z "$TOM_PASS" ] && pass cyberdummy/@tom || echo $TOM_PASS`
 set my_tom_fastmail_pass = `[ -z "$TOM_FASTMAIL_PASS" ] && pass fastmail/mutt || echo $TOM_FASTMAIL_PASS`
 
-folder-hook 'tom/*' 'source ~/.mutt/mailboxes/tom.hook.muttrc'
+folder-hook '=tom/*' 'source ~/.mutt/mailboxes/tom.hook.muttrc'
 
 # make sure if im sending from a "tom" address it goes via correct smtp server
 #send2-hook '~f ^tom@cyberdummy\.co\.uk$' \
