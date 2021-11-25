@@ -23,10 +23,10 @@ super + b
 
 # scratch pad term
 super + e
-    dummy scratch
+    dummy scratch main
 # daily report
 super + r
-    dummy scratch report
+    dummy scratch report vim -S ~/.vim/sessions/vimwiki.vim -c VimwikiMakeDiaryNote
 
 # get a named clipboard
 super + v

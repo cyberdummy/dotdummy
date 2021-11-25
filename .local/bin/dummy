@@ -51,30 +51,33 @@ scratchpad() {
     local focused=$(xdotool getactivewindow)
     local scratch=$(xdotool search --classname $SCRID)
 
+    local win="scratch"
+    if [[ ! -z ${1+x} ]]; then
+        win=$1
+        shift
+    fi
+
     if [[ -n $scratch ]]; then
-        local win="scratch"
-        if [[ ! -z ${1+x} ]]; then
-            win=$1
-        fi
-        tmux select-window -t scratch:$win || tmux new-window -t scratch -n $1
+        cur=$(tmux display-message -t scratch -p '#W')
+        tmux select-window -t scratch:$win || tmux new-window -a -t scratch -n $win "$@"
         if [[ $focused == $scratch ]]; then
-            bspc node -g hidden
-            #tmux kill-session -t scratch
+            if [[ "$cur" == "$win" ]]; then
+                bspc node -g hidden
+            fi
         else
             bspc node $scratch -g hidden
             xdotool windowactivate $scratch
         fi
     else
         bspc monitor -f primary
-        urxvt \
+        nohup urxvt \
             -name $SCRID \
             -geometry 100x26 \
             -bg '#fdf6e3' \
             -fg '#657b83' \
             -e bash \
-            -c 'tmux new-session -A -s scratch -n scratch'
+            -c "tmux new-session -A -s scratch -n $win $*" </dev/null &>/dev/null & disown
     fi
-
 }
 
 nn() {
