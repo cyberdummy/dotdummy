@@ -3,6 +3,9 @@
 # Start the hotkey daemon ~/.config/sxhkd/sxhkdrc
 sxhkd &
 
+# Start polybar
+$HOME/.config/polybar/launch.sh
+
 # Setup "Desktops" (workspaces) and make sure monitors are in order
 if xrandr | grep eDP1; then
     if xrandr | grep DP1; then
