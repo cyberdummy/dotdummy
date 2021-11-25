@@ -8,6 +8,20 @@ if [[ -r "$file" ]] && [[ -f "$file" ]]; then
     source "$file"
 fi
 
+chill() {
+    nohup urxvt \
+        -name music \
+        -e streamlink -v --player 'mpv --mute=no --no-ytdl --osc --no-video --term-osd-bar --msg-level=ffmpeg=no' \
+          https://www.youtube.com/watch?v=5qap5aO4i9A </dev/null &>/dev/null & disown
+}
+
+class() {
+    nohup urxvt \
+        -name music \
+        -e mpv --mute=no --osc --no-video --term-osd-bar --msg-level=ffmpeg=no \
+          https://www.youtube.com/watch?v=vfdwtIOD1Vw </dev/null &>/dev/null & disown
+}
+
 # Get the name of the default sink
 default_sink_name() {
     pactl info \
@@ -46,7 +60,7 @@ find_blue_sink() {
 }
 
 find_jack_sink() {
-    find_sink "motherboard\.analog-stereo"
+    find_sink "\.jack\."
 }
 
 find_monitor_sink() {
@@ -171,6 +185,10 @@ case "$command" in
     monitor; exit 0 ;;
  jack)
      jack; exit 0 ;;
+ chill)
+     chill; exit 0 ;;
+ class)
+     class; exit 0 ;;
   *)
     echo "`basename "$0"` $command: unknown command." >&2
     exit 1
