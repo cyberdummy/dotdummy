@@ -1,0 +1,9 @@
+[Unit]
+Description=Start the transmission daemon
+
+[Service]
+Type=simple
+ExecStart=transmission-daemon -f
+
+[Install]
+WantedBy=multi-user.target
