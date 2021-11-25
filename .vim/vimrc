@@ -179,6 +179,8 @@ cnoremap <expr> <CR> CCR()
 nmap [I :ilist <c-r>=expand("<cword>")<CR><CR>
 nmap [D :dlist <c-r>=expand("<cword>")<CR><CR>
 
+packadd vim-qf
+
 " Jank templates
 augroup Templating
     autocmd!
