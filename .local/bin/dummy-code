@@ -22,6 +22,19 @@ lint-go() {
     golint $1
 }
 
+lint-shell() {
+    shellcheck -f gcc $1
+    local prob=$(shfmt -i 2 -sr -ci -s -l "$1")
+
+    if [[ -n "$prob" ]]; then
+      echo "$1:1:1: error shfmt does not like it"
+    fi
+}
+
+shell-fmt() {
+  shfmt -i 2 -sr -ci -s -l -w "$1"
+}
+
 lint-python() {
     pipenv run python -m py_compile $1
 
@@ -135,6 +148,10 @@ shift
 case "$command" in
     lint-php)
         lint-php $@; exit 0 ;;
+    lint-shell)
+        lint-shell $@; exit 0 ;;
+    shell-fmt)
+        shell-fmt $@; exit 0 ;;
     lint-go)
         lint-go $@; exit 0 ;;
     lint-python)
