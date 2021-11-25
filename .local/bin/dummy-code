@@ -1,12 +1,6 @@
 #!/bin/bash
 set -uo pipefail
 
-file=~/.config/dotdummy/docker.sh
-
-if [[ -r "$file" ]] && [[ -f "$file" ]]; then
-    source "$file"
-fi
-
 lint-php() {
     php -l $1
 
