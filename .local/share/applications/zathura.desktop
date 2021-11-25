@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Zathura
+Comment=A vim like pdf viewer
+Exec=zathura
+Terminal=false
+MimeType=application/pdf
