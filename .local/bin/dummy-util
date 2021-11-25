@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Search for a command from history and copy to clipboard
+hist() {
+  # history does not work in fish?
+  fish -c history | awk '{$1=$1};1' | fzf --print0 | xsel -b -i
+}
+
+sumcol() {
+  paste -sd+ - | bc
+}
+
+zoomzoom(){
+    local id=$(echo "$1" | cut -d '/' -f5 | cut -d '?' -f1)
+    local query=$(echo "$1" | cut -d '?' -f2)
+    local url="zoommtg://zoom.us/join?action=join&confno=$id&$query"
+
+    flatpak run us.zoom.Zoom "$url"
+}
+
+countdown(){
+    date1=$((`date +%s` + $1));
+    while [ "$date1" -ge `date +%s` ]; do
+    ## Is this more than 24h away?
+    days=$(($(($(( $date1 - $(date +%s))) * 1 ))/86400))
+    echo -ne "$days day(s) and $(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r";
+    sleep 0.1
+    done
+}
+
+stopwatch(){
+    date1=`date +%s`;
+    while true; do
+    days=$(( $(($(date +%s) - date1)) / 86400 ))
+    echo -ne "$days day(s) and $(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r";
+    sleep 0.1
+    done
+}
+
+[ $# -gt 0 ] || exit 1
+
+command="$1"
+shift
+
+case "$command" in
+    hist)
+        hist "$@"; exit 0 ;;
+    sumcol)
+        sumcol "$@"; exit 0 ;;
+    zoomzoom)
+        zoomzoom "$@"; exit 0 ;;
+    countdown)
+        countdown "$@"; exit 0 ;;
+    stopwatch)
+        stopwatch "$@"; exit 0 ;;
+    *)
+        echo "`basename "$0"` $command: unknown command." >&2
+        exit 1
+        ;;
+esac

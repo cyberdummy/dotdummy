@@ -7,6 +7,27 @@ if [[ -r "$file" ]] && [[ -f "$file" ]]; then
     source "$file"
 fi
 
+aws(){
+    docker run --rm -it \
+        --user $(id -u) \
+        --log-driver none \
+        -e "AWS_ACCESS_KEY_ID" \
+        -e "AWS_SECRET_ACCESS_KEY" \
+        -e "AWS_DEFAULT_REGION" \
+        -e "AWS_PAGER" \
+        -v "${HOME}/downloads:/downloads" \
+        --workdir "/downloads" \
+        amazon/aws-cli "$@"
+}
+
+background(){
+  nohup "$@" </dev/null &>/dev/null & disown
+}
+
+ff(){
+  background firefox -p Tom --class browser-tom
+}
+
 pass_fuzz() {
     shopt -s nullglob globstar
 
@@ -178,6 +199,12 @@ case "$command" in
         exec "$HOME/.local/bin/dummy-home" "$@" ;;
     dlaunch)
         docker_launch "$@"; exit 0 ;;
+    aws)
+      aws "$@"; exit 0 ;;
+    background)
+      background "$@"; exit 0 ;;
+    ff)
+      ff "$@"; exit 0 ;;
     *)
         echo "`basename "$0"` $command: unknown command." >&2
         exit 1
