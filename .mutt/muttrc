@@ -137,7 +137,6 @@ macro index,pager A \
     "add the sender email address to khard"
 
 # Notmuch
-set nm_default_uri = "notmuch:///mail"
 bind index,pager <F9> vfolder-from-query
 macro index \\\\ "<vfolder-from-query-readonly>" "Search mailbox"
 folder-hook notmuch 'push <first-entry>' # select first entry rather than first unread in search results
