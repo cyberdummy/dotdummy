@@ -141,6 +141,8 @@ cmd="$cmd \"\$@\""
 
 if [[ $cmd == "dake_is_live \"\$@\"" ]]; then
   eval $cmd 2> /dev/null
+elif [[ $cmd == "dake_lint \"\$@\"" ]]; then
+  eval $cmd || dummy-code lint-php $@
 else
   eval $cmd
 fi
