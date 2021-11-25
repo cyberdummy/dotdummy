@@ -3,12 +3,8 @@ set -uo pipefail
 
 lint-php() {
     php -l $1
-
-    phpcs \
-        --basepath=/workspace/ \
-        --report=emacs \
-        --standard=~/.config/phpcs/tom_standard.xml \
-        $1
+    php ~/.config/composer/vendor/bin/phpmd $1 text cleancode,unusedcode,${HOME}/.config/phpmd/tom_rules.xml
+    phpcs --report=emacs --standard=~/.config/phpcs/tom_standard.xml $1
 }
 
 lint-go() {
