@@ -15,7 +15,7 @@ else
     eval "dircolors ~/.dir_colors" > /dev/null
 fi
 
-for file in ~/.config/dotdummy/{exports.sh,aliases.sh,bash_prompt.sh}; do
+for file in ~/.config/dotdummy/{exports.sh,aliases.sh,aliases_local.sh,bash_prompt.sh,functions.sh}; do
     if [[ -r "$file" ]] && [[ -f "$file" ]]; then
         source "$file"
     fi

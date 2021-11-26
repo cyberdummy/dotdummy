@@ -1,6 +1,10 @@
 #!/bin/bash
 set -uo pipefail
 
+cdg () {
+  cd $(git root)
+}
+
 lint-php() {
     php -l $1
     php ~/.config/composer/vendor/bin/phpmd $1 text cleancode,unusedcode,${HOME}/.config/phpmd/tom_rules.xml
@@ -150,6 +154,8 @@ case "$command" in
         create-pr $@; exit 0 ;;
     repo)
         choose-repo $@; exit 0 ;;
+    cdg)
+        cdg $@; exit 0 ;;
     *)
         echo "`basename "$0"` $command: unknown command." >&2
         exit 1
