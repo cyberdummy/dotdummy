@@ -29,16 +29,11 @@ alias skyper="dummy background com.skype.Client"
 alias mcraft="dummy background com.mojang.Minecraft"
 alias vwiki="vim -S ~/.vim/sessions/vimwiki.vim"
 
-tremote(){
-    systemctl --user start transmission
-    transmission-remote "$@"
-}
-export -f tremote
-
 # older servers dont know the tmux TERM type
 ssh(){
-    local LOCAL_TERM=$(echo -n "$TERM" | sed -e s/tmux/screen/)
-    env TERM=$LOCAL_TERM ssh "$@"
+    local LOCAL_TERM
+    LOCAL_TERM=$(echo -n "$TERM" | sed -e s/tmux/screen/)
+    env "TERM=$LOCAL_TERM" ssh "$@"
 }
 
 local_file="${HOME}/.config/dotdummy/aliases_local.sh"
