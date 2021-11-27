@@ -12,7 +12,9 @@ if [[ $(uname -s) == "Darwin" ]]; then
     export IS_MAC=1
     [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 else
-    eval "dircolors ~/.dir_colors" > /dev/null
+  colors=$(dircolors ~/.dir_colors)
+  eval "$colors"
+  unset colors
 fi
 
 for file in ~/.config/dotdummy/{exports.sh,aliases.sh,aliases_local.sh,bash_prompt.sh,functions.sh}; do
