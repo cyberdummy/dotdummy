@@ -179,6 +179,9 @@ cnoremap <expr> <CR> CCR()
 nmap [I :ilist <c-r>=expand("<cword>")<CR><CR>
 nmap [D :dlist <c-r>=expand("<cword>")<CR><CR>
 
+" Copy current relative file path to system clipboard
+nnoremap <leader>cf :let @+=expand("%")<CR>
+
 packadd vim-qf
 
 " Jank templates
