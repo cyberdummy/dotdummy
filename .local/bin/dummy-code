@@ -16,6 +16,18 @@ lint-go() {
     golint $1
 }
 
+
+lint-rust() {
+  if ! rustfmt --check $1 > /dev/null; then
+      echo "$1:1:1: error rustfmt does not like it"
+  fi
+}
+
+build-rust() {
+  cargo clippy
+  cargo build
+}
+
 lint-shell() {
     shellcheck -f gcc $1
     local prob=$(shfmt -i 2 -sr -ci -s -l "$1")
@@ -148,6 +160,10 @@ case "$command" in
         shell-fmt $@; exit 0 ;;
     lint-go)
         lint-go $@; exit 0 ;;
+    lint-rust)
+        lint-rust $@; exit 0 ;;
+    build-rust)
+        build-rust $@; exit 0 ;;
     lint-python)
         lint-python $@; exit 0 ;;
     create-pr)
