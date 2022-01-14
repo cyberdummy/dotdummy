@@ -1,6 +1,6 @@
 buku
 docker-compose
-git+git://github.com/pimutils/khal.git
+#git+git://github.com/pimutils/khal.git
 vdirsyncer
 streamlink
 khard
