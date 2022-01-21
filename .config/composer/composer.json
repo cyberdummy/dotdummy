@@ -3,5 +3,10 @@
         "squizlabs/php_codesniffer": "*",
         "phpmd/phpmd": "@stable",
         "slevomat/coding-standard": "^6.4"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": false
+        }
     }
 }
