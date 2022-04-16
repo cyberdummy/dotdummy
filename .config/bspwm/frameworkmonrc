@@ -1,0 +1,5 @@
+xrandr --output eDP-1 --auto --output DP-1 --auto --pos 2256x0
+bspc monitor eDP-1 -d slack
+bspc monitor DP-1 -d main browser workbrowser media five six zoom eight
+bspc desktop -f main
+feh --bg-scale ~/.local/share/bg.jpg

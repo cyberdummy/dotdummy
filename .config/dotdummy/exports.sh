@@ -20,3 +20,6 @@ if [[ -n "${IS_MAC-}" ]]; then
     export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
     gpg-agent --daemon --pinentry-program /usr/local/bin/pinentry-mac 2> /dev/null
 fi
+
+export DYNAMIC_COLORS_ROOT=~/.config/dynamic-colors
+export GDK_DPI_SCALE=0.8

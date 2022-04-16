@@ -1,4 +1,4 @@
-*.font: xft:JetBrains Mono:size=11,xft:Fira Code:size=11,xft:Inconsolata,xft:DejaVu Sans Mono,xft:FreeSerif:size=11,xft:Symbola,xft:Noto Emoji:minspace=False
+*.font: xft:JetBrains Mono:size=11,xft:Fira Code:size=11,xft:Inconsolata,xft:DejaVu Sans Mono,xft:FreeSerif:size=11,xft:Symbola,xft:Noto Emoji:minspace=False,xft:Font Awesome 6 Free Solid,xft:Font Awesome 6 Free Regular
 
 Xft.autohint: 0
 Xft.lcdfilter: lcddefault
@@ -6,10 +6,12 @@ Xft.hintstyle: hintslight
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
+Xft.dpi: 160
 !*.italicFont: xft:JetBrains Mono Medium:style:size=11:Italic,xft:Script12 BT:size=11
 
-#include ".config/xresources/colours/solarized-dark.xresources"
+!#include ".config/xresources/colours/solarized-dark.xresources"
 !#include ".config/xresources/colours/solarized-light.xresources"
+#include ".config/xresources/colours/nord.xresources"
 
 ! Apps
 #include ".config/xresources/urxvt.xresources"

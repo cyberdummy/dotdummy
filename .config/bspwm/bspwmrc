@@ -4,19 +4,19 @@
 killall sxhkd
 sxhkd &
 
-# Start polybar
-$HOME/.config/polybar/launch.sh
 
 # Setup "Desktops" (workspaces) and make sure monitors are in order
-if xrandr | grep eDP1; then
-    if xrandr | grep DP1; then
-        . ~/.config/bspwm/macbookmonrc
+if xrandr | grep 'eDP-1 connected'; then
+    if xrandr | grep '^DP-1 connected'; then
+        . ~/.config/bspwm/frameworkmonrc
     else
-        . ~/.config/bspwm/macbookrc
+        . ~/.config/bspwm/frameworkrc
     fi
+    "$HOME/.config/polybar/nord/launch.sh" dark framework
 else
     bspc monitor DP-4 -d main browser workbrowser media five six zoom eight
     bspc monitor DP-0 -d slack
+    "$HOME/.config/polybar/nord/launch.sh" dark
 fi
 
 # Everything below came as default
