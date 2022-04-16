@@ -16,3 +16,6 @@
 [submodule ".vim/pack/plugins/opt/vimwiki"]
 	path = .vim/pack/plugins/opt/vimwiki
 	url = https://github.com/vimwiki/vimwiki
+[submodule ".dynamic-colors"]
+	path = .dynamic-colors
+	url = https://github.com/sos4nt/dynamic-colors
