@@ -13,7 +13,7 @@ if !v:shell_error
 else
     set background=dark
 endif
-colorscheme solarized_custom
+colorscheme nord
 " Fix undercurl
 set t_Cs=
 
