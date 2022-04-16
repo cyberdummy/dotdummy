@@ -108,6 +108,12 @@ nn() {
     # documents add and push
     if [[ -d $HOME/documents/.git ]]; then
         local docs="${HOME}/documents"
+
+        # keep a record of installed packages
+        if hash pacman 2>/dev/null; then
+          pacman -Qqe > "${docs}/pkglist.txt"
+        fi
+
         (
             cd $docs && \
             git add -A && \
