@@ -4,7 +4,7 @@
 # DPI value for HiDPI screen
 dpi = 192
 # Main monitor, default to MONITOR environment variable.
-monitor = ${env:MONITOR:DP-0}
+monitor = ${env:MONITOR:HDMI-A-0}
 
 # bar position, apply globally
 width = 100%

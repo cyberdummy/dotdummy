@@ -14,8 +14,8 @@ if xrandr | grep 'eDP-1 connected'; then
     fi
     "$HOME/.config/polybar/nord/launch.sh" dark framework
 else
-    bspc monitor DP-4 -d main browser workbrowser media five six zoom eight
-    bspc monitor DP-0 -d slack
+    bspc monitor DisplayPort-0 -d main browser workbrowser media five six zoom eight
+    bspc monitor HDMI-A-0 -d slack
     "$HOME/.config/polybar/nord/launch.sh" dark
 fi
 
