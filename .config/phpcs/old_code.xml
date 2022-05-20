@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ruleset name="Old Code" namespace="Tom\Standard">
+    <description>Mostly PSR2 with some extras</description>
+    <rule ref="PSR2"/>
+
+        <!-- Avoid using double quotes -->
+    <rule ref="Squiz.Strings.DoubleQuoteUsage"/>
+        <!-- String concat dont put vars in "" -->
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
+
+        <!-- Comments on functions, variables, classes & files -->
+    <rule ref="Squiz.Commenting.FunctionComment.Missing">
+        <exclude-pattern>*Test.php</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Commenting.VariableComment.Missing">
+        <exclude-pattern>*Test.php</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Commenting.ClassComment.Missing">
+        <exclude-pattern>*Test.php</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/>
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="list" value="[]"/>
+            </property>
+        </properties>
+    </rule>
+    <!-- Variables should be camel -->
+    <!-- <rule ref="Squiz.NamingConventions.ValidVariableName.NotCamelCaps"/> -->
+    <!-- <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps"/> -->
+</ruleset>

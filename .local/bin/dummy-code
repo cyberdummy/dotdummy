@@ -6,9 +6,10 @@ cdg () {
 }
 
 lint-php() {
+    local std="${PHPCS_RULES:-~/.config/phpcs/tom_standard.xml}"
     php -l $1
     php ~/.config/composer/vendor/bin/phpmd $1 text cleancode,unusedcode,${HOME}/.config/phpmd/tom_rules.xml
-    phpcs --report=emacs --standard=~/.config/phpcs/tom_standard.xml $1
+    phpcs --report=emacs --standard=${std} $1
 }
 
 lint-go() {
