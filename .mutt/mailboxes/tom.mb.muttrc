@@ -17,7 +17,7 @@ send2-hook '~f ^tom@cyberdummy\.co\.uk$' \
     'set smtp_url = "smtps://tom@cyberdummy.co.uk@smtp.fastmail.com:565" ; \
      set smtp_pass = $my_tom_fastmail_pass'
 send2-hook '~f ^tom@codeclick\.co\.uk$' \
-    'set smtp_url = "smtp://tom@cyberdummy.co.uk@spike.codeclick.co.uk:565" ; \
+    'set smtp_url = "smtps://tom@cyberdummy.co.uk@smtp.fastmail.com:565" ; \
      set smtp_pass = $my_tom_fastmail_pass'
 
 fcc-save-hook '~f ^tom@cyberdummy\.co\.uk$' '=tom/Sent/'
