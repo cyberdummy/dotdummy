@@ -1,4 +1,4 @@
-xrandr --output eDP-1 --auto --output DP-1 --auto --pos 2256x0
+xrandr --output eDP-1 --auto --output DP-1 --auto --pos 2256x0 --mode 3840x2160
 xrandr --output DP-1 --primary
 bspc monitor eDP-1 -d slack
 bspc monitor DP-1 -d main browser workbrowser media five six zoom eight
