@@ -4,6 +4,8 @@ TAB: complete
 #set editing-mode vi
 set completion-ignore-case on
 
+set bell-style none
+
 $if mode=vi
 	set keymap vi-command
 	# these are for vi-command mode
