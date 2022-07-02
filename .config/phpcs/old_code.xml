@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <ruleset name="Old Code" namespace="Tom\Standard">
+    <config name="installed_paths" value="../../slevomat/coding-standard"/>
     <description>Mostly PSR2 with some extras</description>
     <rule ref="PSR2"/>
+    <rule ref="PSR12"/>
 
         <!-- Avoid using double quotes -->
     <rule ref="Squiz.Strings.DoubleQuoteUsage"/>
