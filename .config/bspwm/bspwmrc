@@ -17,6 +17,8 @@ else
     bspc monitor DisplayPort-0 -d main browser workbrowser media five six zoom eight
     bspc monitor HDMI-A-0 -d slack
     "$HOME/.config/polybar/nord/launch.sh" dark
+    xrandr --output DisplayPort-0 --set TearFree on
+    xrandr --output HDMI-A-0 --set TearFree on
 fi
 
 # Everything below came as default
