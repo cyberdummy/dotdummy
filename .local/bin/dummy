@@ -28,6 +28,10 @@ ff(){
   background firefox -p Tom --class browser-tom
 }
 
+ffvpn(){
+  background sudo -E chnetns nordvpn sudo -E su tom -c 'firefox -p Vpn --class browser-vpn'
+}
+
 pass_fuzz() {
     shopt -s nullglob globstar
 
@@ -211,6 +215,8 @@ case "$command" in
       background "$@"; exit 0 ;;
     ff)
       ff "$@"; exit 0 ;;
+    ffvpn)
+      ffvpn "$@"; exit 0 ;;
     *)
         echo "`basename "$0"` $command: unknown command." >&2
         exit 1

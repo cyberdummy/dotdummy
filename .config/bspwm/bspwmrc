@@ -44,6 +44,9 @@ bspc rule -a browser-work desktop='workbrowser'
 bspc rule -a mpv desktop='media'
 bspc rule -a *:music desktop='media'
 
+# Work vpn firefox to desktop #5
+bspc rule -a browser-vpn desktop='five'
+
 # Zoom desktop #7
 bspc rule -a zoom desktop='zoom'
 bspc rule -a Skype desktop='zoom'
