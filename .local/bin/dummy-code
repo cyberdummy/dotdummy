@@ -78,7 +78,7 @@ create-pr() {
     local title base head send repo
 
     read -p 'Head: ' -i $(git rev-parse --abbrev-ref HEAD) -e head
-    local jira=$(echo "$head" | awk -F '_' '{print $1}')
+    local jira=$(echo "$head" | awk -F '-' '{print $1"-"$2" "}')
 
     read -p 'Title: ' -i "$jira" -e title
     read -p 'Base: ' -i 'release' -e base
