@@ -9,3 +9,4 @@ reportlab
 qmk
 #tvnamer
 yewtube
+vdirsyncer[google]

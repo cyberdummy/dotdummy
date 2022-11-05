@@ -4,10 +4,10 @@
 
 # terminal emulator
 super + Return
-    urxvt
+    alacritty
 
 super + shift + Return
-    alacritty
+    urxvt
 
 # get a password
 super + q

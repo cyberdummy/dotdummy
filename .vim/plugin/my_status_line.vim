@@ -16,7 +16,7 @@ function MyLinterStatus() abort
                 \)
 endfunction
 
-" Check if a project is point at live
+" Check if a project is pointing at live
 function IsLive() abort
     let l = system('dake is_live')
     if len(l) < 2
@@ -24,7 +24,7 @@ function IsLive() abort
     endif
     let l = l[:-2]
     if stridx(l, 'live') >= 0
-        return printf('%%#ErrorMsg# %s %%*', l)
+        return printf('%%#SpellBad# %s %%*', l)
     endif
 
     return printf('%%#DiffAdd# %s %%*', l)

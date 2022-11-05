@@ -10,8 +10,8 @@ Xft.dpi: 160
 !*.italicFont: xft:JetBrains Mono Medium:style:size=11:Italic,xft:Script12 BT:size=11
 
 !#include ".config/xresources/colours/solarized-dark.xresources"
-!#include ".config/xresources/colours/solarized-light.xresources"
-#include ".config/xresources/colours/nord.xresources"
+#include ".config/xresources/colours/solarized-light.xresources"
+!#include ".config/xresources/colours/nord.xresources"
 
 ! Apps
 #include ".config/xresources/urxvt.xresources"
