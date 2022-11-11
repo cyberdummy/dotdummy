@@ -6,13 +6,13 @@ runtime macros/matchit.vim
 
 " Appearance {{{
 
-let shellcmd = 'grep "colors: \*light" ~/.config/alacritty/alacritty.yml'
-let output=system(shellcmd)
-if !v:shell_error
-    set background=light
-else
-    set background=dark
-endif
+"let shellcmd = 'grep "colors: \*light" ~/.config/alacritty/alacritty.yml'
+"let output=system(shellcmd)
+"if !v:shell_error
+"    set background=light
+"else
+"    set background=dark
+"endif
 
 " You might have to force true color when using regular vim inside tmux as the
 " colorscheme can appear to be grayscale with "termguicolors" option enabled.
