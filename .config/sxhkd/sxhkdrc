@@ -78,8 +78,8 @@ super + m
     bspc desktop -l next
 
 # swap the current node and the biggest node
-super + g
-    bspc node -s biggest
+#super + g
+#    bspc node -s biggest
 
 #
 # state/flags
@@ -102,12 +102,12 @@ super + {_,shift + }{h,j,k,l}
     bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
-super + {p,b,comma,period}
-    bspc node -f @{parent,brother,first,second}
+#super + {p,b,comma,period}
+#    bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous node in the current desktop
-super + {_,shift + }c
-    bspc node -f {next,prev}.local
+#super + {_,shift + }c
+#    bspc node -f {next,prev}.local
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
@@ -118,15 +118,23 @@ super + {grave,Tab}
     bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
-super + {o,i}
-    bspc wm -h off; \
-    bspc node {older,newer} -f; \
-    bspc wm -h on
+#super + {o,i}
+#    bspc wm -h off; \
+#    bspc node {older,newer} -f; \
+#    bspc wm -h on
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
     bspc {desktop -f,node -d} {main,browser,workbrowser,media,five,six,zoom,eight,slack}
 
+super + g
+    bspc desktop -f main
+
+super + o
+    bspc desktop -f workbrowser
+
+super + i
+    bspc desktop -f browser
 #
 # preselect
 #
