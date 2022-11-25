@@ -20,3 +20,9 @@
 	path = .dynamic-colors
 	url = https://github.com/sos4nt/dynamic-colors
     ignore = dirty
+[submodule ".vim/pack/plugins/opt/goyo"]
+	path = .vim/pack/plugins/opt/goyo
+	url = https://github.com/junegunn/goyo.vim
+[submodule ".vim/pack/plugins/opt/limelight"]
+	path = .vim/pack/plugins/opt/limelight
+	url = https://github.com/junegunn/limelight.vim

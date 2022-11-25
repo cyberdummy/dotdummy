@@ -9,3 +9,5 @@ augroup WikiDiary
 augroup END
 
 packadd vimwiki
+packadd goyo
+packadd limelight
