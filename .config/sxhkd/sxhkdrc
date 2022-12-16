@@ -26,7 +26,7 @@ super + e
     dummy scratch main
 # daily report
 super + r
-    dummy scratch report vim -S ~/.vim/sessions/vimwiki.vim -c VimwikiMakeDiaryNote -c Goyo -c Limelight
+    dummy scratch report vim -S ~/.vim/sessions/vimwiki.vim -c VimwikiMakeDiaryNote -c Goyo -c Limelight -c 'set spell'
 
 # get a named clipboard
 super + v
