@@ -143,9 +143,7 @@ vnoremap <buffer> <silent> ]] :<C-U>call <SID>MethodJump('', 1)<CR>
 nnoremap <buffer> <Leader>t :read ~/.vim/templates/php/**/*<C-z><S-Tab>
 
 let b:undo_ftplugin .= ''
-            \ . '|nunmap <buffer> [['
             \ . '|vunmap <buffer> [['
-            \ . '|nunmap <buffer> ]]'
             \ . '|vunmap <buffer> ]]'
             \ . '|nunmap <buffer> <LocalLeader>[i'
             \ . '|nunmap <buffer> <LocalLeader>]i'
@@ -155,3 +153,7 @@ let b:undo_ftplugin .= ''
             \ . '|nunmap <buffer> <LocalLeader>]p'
             \ . '|nunmap <buffer> <LocalLeader>]P'
             \ . '|nunmap <buffer> <Leader>t'
+
+" Some kind of problem with this must be to do with vim mapping them
+"            \ . '|nunmap <buffer> [['
+"            \ . '|nunmap <buffer> ]]'
