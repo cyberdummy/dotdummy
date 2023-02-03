@@ -109,7 +109,8 @@ nn() {
 
         # keep a record of installed packages
         if hash pacman 2>/dev/null; then
-          pacman -Qqe > "${docs}/pkglist.txt"
+          pacman -Qqen > "${docs}/pkglist.txt"
+          pacman -Qqem > "${docs}/foreignpkglist.txt"
         fi
 
         (
