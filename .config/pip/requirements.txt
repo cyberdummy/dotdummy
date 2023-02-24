@@ -10,3 +10,4 @@ qmk
 #tvnamer
 yewtube
 vdirsyncer[google]
+setuptools
