@@ -179,10 +179,25 @@ docker_launch() {
 }
 
 timer() {
-  echo -n 'When: '
-  read -r when
-  echo -n 'What: '
-  read -r what
+  if [[ ! -z ${1+x} ]]; then
+    when=$1
+    echo $when
+    shift
+  fi
+  if [[ ! -z ${1+x} ]]; then
+    what=$1
+    shift
+  fi
+
+  if [[ ! -v when ]]; then
+    echo -n 'When: '
+    read -r when
+  fi
+
+  if [[ ! -v what ]]; then
+    echo -n 'What: '
+    read -r what
+  fi
 
   termdown -T "${what}" "${when}" && echo "${what}" && paplay /usr/share/sounds/freedesktop/stereo/complete.oga
 }
@@ -198,7 +213,7 @@ case "$command" in
     menu)
         exec "$HOME/.local/bin/dummy-menu" "$@" ;;
     timer)
-        timer; exit 0 ;;
+        timer "$@"; exit 0 ;;
     pass)
         pass_fuzz; exit 0 ;;
     otp)
