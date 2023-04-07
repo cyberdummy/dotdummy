@@ -26,3 +26,6 @@
 [submodule ".vim/pack/plugins/opt/limelight"]
 	path = .vim/pack/plugins/opt/limelight
 	url = https://github.com/junegunn/limelight.vim
+[submodule ".vim/pack/plugins/opt/copilot"]
+	path = .vim/pack/plugins/opt/copilot
+	url = https://github.com/github/copilot.vim.git
