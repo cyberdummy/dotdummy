@@ -26,5 +26,6 @@ alias slacker="dummy background flatpak run com.slack.Slack --force-device-scale
 alias zoomer="dummy background flatpak run us.zoom.Zoom"
 alias skyper="dummy background com.skype.Client"
 alias mcraft="dummy background com.mojang.Minecraft"
-alias vwiki="vim -S ~/.vim/sessions/vimwiki.vim"
+alias vwiki="vim -S ~/.vim/sessions/vimwiki.vim -c VimwikiIndex"
 alias ding="paplay /usr/share/sounds/freedesktop/stereo/complete.oga"
+alias bc="bc -l"
