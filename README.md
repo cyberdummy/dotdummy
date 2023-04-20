@@ -5,7 +5,7 @@ I use arch linux with the [bspwm](https://github.com/baskerville/bspwm) window m
 ## Mappings for Window Manager
 
 These mappings are executed by the
-[sxhkd](https://github.com/baskerville/sxhkd) hotkey daemon, the config is [here](config/sxhkd/sxhkdrc).
+[sxhkd](https://github.com/baskerville/sxhkd) hotkey daemon, the config is [here](.config/sxhkd/sxhkdrc).
 
 | Mapping           | Description                                                                              |
 | ---               | ---                                                                                      |
