@@ -44,6 +44,14 @@ function fish_prompt
   set_color normal
 
   printf '%s ' (__fish_git_prompt)
+
+  if test $CMD_DURATION
+      set_color cyan
+      # Show duration of the last command in seconds
+      set duration (echo "$CMD_DURATION 1000" | awk '{printf "%.3fs", $1 / $2}')
+      echo -n "$duration "
+  end
+
   set_color yellow
   set live (dake is_live)
   if string match -q -e -- 'live' $live
@@ -52,6 +60,6 @@ function fish_prompt
   echo $live
   set_color yellow
   echo ''
-  echo -n "    🐠 "
+  echo -n "    😄 "
   set_color normal
 end
