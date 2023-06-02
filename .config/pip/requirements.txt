@@ -1,5 +1,5 @@
 buku
-docker-compose
+#docker-compose
 #git+git://github.com/pimutils/khal.git
 vdirsyncer
 streamlink
