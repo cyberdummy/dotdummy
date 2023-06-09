@@ -11,3 +11,4 @@ qmk
 yewtube
 vdirsyncer[google]
 setuptools
+termdown
