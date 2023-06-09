@@ -26,6 +26,12 @@ ffvpn(){
   background sudo -E chnetns nordvpn sudo -E su tom -c 'firefox -p Vpn --class browser-vpn'
 }
 
+ffclean(){
+  PROFILEDIR=$(mktemp -p /tmp -d tmp-fx-profile.XXXXXX.d)
+  firefox -profile "$PROFILEDIR" -no-remote -new-instance
+  rm -rf "$PROFILEDIR"
+}
+
 pass_fuzz() {
     shopt -s nullglob globstar
 
@@ -238,6 +244,8 @@ case "$command" in
       ff "$@"; exit 0 ;;
     ffvpn)
       ffvpn "$@"; exit 0 ;;
+    ffclean)
+      ffclean "$@"; exit 0 ;;
     *)
         echo "`basename "$0"` $command: unknown command." >&2
         exit 1
