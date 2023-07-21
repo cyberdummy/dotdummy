@@ -42,4 +42,8 @@
             <property name="minimum" value="100" />
         </properties>
     </rule>
+
+    <rule ref="rulesets/cleancode.xml">
+        <exclude name="StaticAccess" />
+    </rule>
 </ruleset>
