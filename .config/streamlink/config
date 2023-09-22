@@ -1,3 +1,4 @@
-player=mpv --cache 2048 --no-ytdl --no-stop-screensaver
+player=mpv
+player-args=--cache 2048 --no-ytdl --no-stop-screensaver
 default-stream=720p60,720,best
 player-passthrough=hls,http,rtmp
