@@ -9,5 +9,8 @@ export GDK_DPI_SCALE=0.8
 # Start redshift to adjust screen temp
 redshift &
 
+# notifcation daemon so slack works again
+dunst &
+
 feh --bg-scale ~/.local/share/bg.jpg
 exec bspwm
