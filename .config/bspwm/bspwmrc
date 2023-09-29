@@ -35,6 +35,7 @@ bspc rule -a URxvt:urxvt-float state=floating sticky=on center=on monitor=C
 bspc rule -a URxvt:urxvt-scratch state=floating sticky=on center=on monitor=C
 bspc rule -a feh state=floating
 bspc rule -a Zathura state=tiled
+bspc rule -a slack state=tiled
 
 # Firefox to desktop #2
 bspc rule -a *:Navigator desktop='browser'
