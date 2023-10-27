@@ -11,7 +11,7 @@ alias cdg='dummy-code cdg'
 alias ll='ls -lah'
 alias ls='ls --color=auto'
 alias yank='TZ='America/New_York' date'
-alias afk='i3lock -t -i ~/.local/share/wallpapers/cowboy-4k.png'
+alias afk='dummy lock'
 alias hist="dummy-util hist"
 alias dark="~/.dynamic-colors/bin/dynamic-colors switch solarized-dark"
 alias light="~/.dynamic-colors/bin/dynamic-colors switch solarized-light"
