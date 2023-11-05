@@ -25,3 +25,4 @@ highlight article "https?://[^ ]+" red default
 highlight article "\\[image\\ [0-9]+\\]" green default
 
 macro y set browser "mpv '%u' </dev/null &>/dev/null &"; open-in-browser ; set browser `echo $BROWSER`
+show-read-feeds  no
