@@ -3,7 +3,7 @@
 export EDITOR=vim
 export BROWSER=firefox
 export SSH_AUTH_SOCK=/run/user/$(id -u)/gnupg/S.gpg-agent.ssh
-export PATH=~/.local/bin:~/.config/composer/vendor/bin:$PATH
+export PATH=~/.local/bin:~/.config/composer/vendor/bin:~/.local/share/gem/ruby/3.0.0/bin:$PATH
 export GOPATH="${HOME}/code/go/gopath"
 export PERL_DESTRUCT_LEVEL=2 # stops urxvt exit crash on arch for some reason
 export UID
