@@ -55,7 +55,7 @@ augroup IsLiveStatus
     autocmd BufEnter,BufWritePost * let b:isLive = IsLive() | silent redraw!
 augroup END
 
-let &statusline='  [%{mode()}] %-f %-M %=%{MyLinterStatus()} [LL:%{LocationListStatus()}] [QF:%{QuickFixStatus()}] %{%exists("b:isLive")?b:isLive:"unknown"%} '
+let &statusline='  [%{mode()}] %-f %-M %= [LL:%{LocationListStatus()}] [QF:%{QuickFixStatus()}] %{%exists("b:isLive")?b:isLive:"unknown"%} '
 
 " Folding - http://vimcasts.org/episodes/how-to-fold/
 set foldenable
@@ -125,11 +125,10 @@ endif
 
 let g:mapleader="\<Space>" " space is leader
 let g:maplocalleader=',' " comma is local leader
+
 " <Leader>e = open file with wildcard
 " <Leader>f = search for file using find
 " <Leader>a = search using :grep
-" <Leader>s = source a session
-" <Leader>m = make a session
 
 " Files and Buffers
 set hidden " When a buffer is not in view keep it loaded
