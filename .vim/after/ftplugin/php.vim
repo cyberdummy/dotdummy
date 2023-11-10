@@ -1,5 +1,7 @@
 let g:PHP_vintage_case_default_indent = 1 " PSR compliant switch indents
 
+setlocal omnifunc=phpactor#Complete
+
 setlocal tabstop=4 " number of spaces per tab
 setlocal softtabstop=4 " number of spaces when editing
 setlocal shiftwidth=4 " autoindentation also << >> & ==
@@ -142,6 +144,11 @@ vnoremap <buffer> <silent> ]] :<C-U>call <SID>MethodJump('', 1)<CR>
 
 nnoremap <buffer> <Leader>t :read ~/.vim/templates/php/**/*<C-z><S-Tab>
 
+noremap <buffer> K :PhpactorHover<CR>
+noremap <buffer> <silent> <c-]> :PhpactorGotoDefinition<CR>
+noremap <buffer> <silent> <LocalLeader>i :PhpactorImportClass<CR>
+noremap <buffer> <silent> <LocalLeader>n :PhpactorClassNew<CR>
+
 let b:undo_ftplugin .= ''
             \ . '|vunmap <buffer> [['
             \ . '|vunmap <buffer> ]]'
@@ -153,6 +160,9 @@ let b:undo_ftplugin .= ''
             \ . '|nunmap <buffer> <LocalLeader>]p'
             \ . '|nunmap <buffer> <LocalLeader>]P'
             \ . '|nunmap <buffer> <Leader>t'
+            \ . '|nunmap <buffer> K'
+            \ . '|nunmap <buffer> <LocalLeader>i'
+            \ . '|nunmap <buffer> <LocalLeader>n'
 
 " Some kind of problem with this must be to do with vim mapping them
 "            \ . '|nunmap <buffer> [['
