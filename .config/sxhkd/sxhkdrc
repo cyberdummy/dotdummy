@@ -55,11 +55,11 @@ super + shift + Escape
 
 # Jump to slack
 super + c
-    xdotool search --onlyvisible -class Slack | xargs bspc node -f
+    xdotool search --maxdepth=1 --class Slack | xargs bspc node -f
 
 # focus on slack on desktop thats on main monitor
 super + shift + c
-    id=$(xdotool search --onlyvisible -class Slack); (bspc node ${id} -d slack && bspc desktop -f main) || bspc node ${id} -d eight -f
+    id=$(xdotool search --onlyvisible --maxdepth=1 --class Slack); (bspc node ${id} -d slack && bspc desktop -f main) || bspc node ${id} -d eight -f
 
 #
 # bspwm hotkeys
