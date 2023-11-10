@@ -16,10 +16,6 @@
 [submodule ".vim/pack/plugins/opt/vimwiki"]
 	path = .vim/pack/plugins/opt/vimwiki
 	url = https://github.com/vimwiki/vimwiki
-[submodule ".dynamic-colors"]
-	path = .dynamic-colors
-	url = https://github.com/sos4nt/dynamic-colors
-    ignore = dirty
 [submodule ".vim/pack/plugins/opt/goyo"]
 	path = .vim/pack/plugins/opt/goyo
 	url = https://github.com/junegunn/goyo.vim
@@ -29,3 +25,6 @@
 [submodule ".vim/pack/plugins/opt/copilot"]
 	path = .vim/pack/plugins/opt/copilot
 	url = https://github.com/github/copilot.vim.git
+[submodule ".vim/pack/plugins/opt/phpactor"]
+	path = .vim/pack/plugins/opt/phpactor
+	url = https://github.com/phpactor/phpactor.git
