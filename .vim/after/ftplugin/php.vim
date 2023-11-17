@@ -144,10 +144,17 @@ vnoremap <buffer> <silent> ]] :<C-U>call <SID>MethodJump('', 1)<CR>
 
 nnoremap <buffer> <Leader>t :read ~/.vim/templates/php/**/*<C-z><S-Tab>
 
-noremap <buffer> K :PhpactorHover<CR>
-noremap <buffer> <silent> <c-]> :PhpactorGotoDefinition<CR>
-noremap <buffer> <silent> <LocalLeader>i :PhpactorImportClass<CR>
-noremap <buffer> <silent> <LocalLeader>n :PhpactorClassNew<CR>
+if exists(':PhpactorStatus')
+    noremap <buffer> K :PhpactorHover<CR>
+    noremap <buffer> <silent> <c-]> :PhpactorGotoDefinition<CR>
+    noremap <buffer> <silent> <LocalLeader>i :PhpactorImportClass<CR>
+    noremap <buffer> <silent> <LocalLeader>n :PhpactorClassNew<CR>
+
+    let b:undo_ftplugin .= ''
+            \ . '|nunmap <buffer> K'
+            \ . '|nunmap <buffer> <LocalLeader>i'
+            \ . '|nunmap <buffer> <LocalLeader>n'
+endif
 
 let b:undo_ftplugin .= ''
             \ . '|vunmap <buffer> [['
@@ -160,9 +167,6 @@ let b:undo_ftplugin .= ''
             \ . '|nunmap <buffer> <LocalLeader>]p'
             \ . '|nunmap <buffer> <LocalLeader>]P'
             \ . '|nunmap <buffer> <Leader>t'
-            \ . '|nunmap <buffer> K'
-            \ . '|nunmap <buffer> <LocalLeader>i'
-            \ . '|nunmap <buffer> <LocalLeader>n'
 
 " Some kind of problem with this must be to do with vim mapping them
 "            \ . '|nunmap <buffer> [['
