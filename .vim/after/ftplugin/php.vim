@@ -149,11 +149,13 @@ if exists(':PhpactorStatus')
     noremap <buffer> <silent> <c-]> :PhpactorGotoDefinition<CR>
     noremap <buffer> <silent> <LocalLeader>i :PhpactorImportClass<CR>
     noremap <buffer> <silent> <LocalLeader>n :PhpactorClassNew<CR>
+    noremap <buffer> <silent> <LocalLeader>w :PhpactorFindReferences<CR>
 
     let b:undo_ftplugin .= ''
             \ . '|nunmap <buffer> K'
             \ . '|nunmap <buffer> <LocalLeader>i'
             \ . '|nunmap <buffer> <LocalLeader>n'
+            \ . '|nunmap <buffer> <LocalLeader>w'
 endif
 
 let b:undo_ftplugin .= ''
