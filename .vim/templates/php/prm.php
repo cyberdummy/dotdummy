@@ -1,4 +1,4 @@
-protected function ()
+private function ()
 {
     //
 }
