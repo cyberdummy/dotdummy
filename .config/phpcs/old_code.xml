@@ -22,7 +22,9 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
-    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
+        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification"/>
+    </rule>
     <rule ref="Generic.PHP.ForbiddenFunctions">
         <properties>
             <property name="forbiddenFunctions" type="array">
