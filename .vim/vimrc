@@ -139,6 +139,8 @@ set wildcharm=<C-z>
 nnoremap <Leader>e :e **/*<C-z><S-Tab>
 " Open file in directory of current
 nnoremap ,e :e <C-R>=expand("%:h") . "/" <CR>
+" grep from directory of current
+nnoremap ,a :grep  <C-R>=expand("%:h") . "/" <CR><S-Left><S-Left>
 
 set path-=/usr/include
 "nnoremap <Leader>f :find **/*<C-z><S-Tab>
