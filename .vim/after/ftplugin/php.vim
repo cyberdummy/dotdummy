@@ -41,6 +41,11 @@ function! PHPIncludeExpr(fname)
     return l:newName
 endfunction
 
+" if we do not have a make setup just run current script with native php
+if mapcheck("m<CR>") == ""
+    nnoremap m<CR> :!php %<CR>
+endif
+
 " make gf use psr4 namespacing
 setlocal includeexpr=PHPIncludeExpr(v:fname)
 " backslash in file name so we can convert "use" paths to files
