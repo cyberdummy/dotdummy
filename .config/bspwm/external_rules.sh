@@ -2,12 +2,12 @@
 
 wid=$1
 class=$2
-instance=$3
-consequences=$4
+#instance=$3
+#consequences=$4
 
 shopt -s nocasematch
 
-if [[ "$class" == *"Minecraft"* ]] || [[ "$class" == *"minecraft"* ]]; then
+if [[ "$class" == *"Minecraft"* ]] || [[ "$class" == *"minecraft"* ]] || [[ "$class" == *"PrismLauncher"* ]]; then
     echo "desktop=five"
     exit 0
 fi
