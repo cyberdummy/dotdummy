@@ -171,7 +171,7 @@ nn() {
         fi
 
         if hash pip 2>/dev/null; then
-            pip install --upgrade -r ~/.config/pip/requirements.txt
+            pip install --upgrade -r ~/.config/pip/requirements.txt --break-system-packages
         fi
 
         if hash composer 2>/dev/null; then

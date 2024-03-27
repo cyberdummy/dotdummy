@@ -12,3 +12,4 @@ yewtube
 vdirsyncer[google]
 setuptools
 termdown
+chatblade
