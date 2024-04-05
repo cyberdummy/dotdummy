@@ -1,5 +1,5 @@
 # basic colors ---------------------------------------------------------------
-color status        yellow          black
+color status        default         black
 color normal        brightyellow    default
 color error         red             default
 color tilde         black           default
