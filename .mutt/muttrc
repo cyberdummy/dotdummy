@@ -95,7 +95,7 @@ macro attach,compose gu \
     'URL Scan'
 
 macro attach,compose,index,pager gc \
-    '<pipe-entry>LC_ALL=C urlscan --run "echo \"{}\" | xclip -r -i -selection clipboard"<Enter>' \
+    '<pipe-entry>LC_ALL=C urlscan --run "echo \"{}\" | wl-copy -n"<Enter>' \
     'URL Scan to clipboard'
 
 # open this part in browser
