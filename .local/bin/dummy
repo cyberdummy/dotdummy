@@ -45,6 +45,8 @@ background(){
 }
 
 ff(){
+  rm /tmp/bookmarks.html || true
+  buku /tmp/bookmarks.html
   background firefox -p Tom --class browser-tom
 }
 
