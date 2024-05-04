@@ -46,8 +46,12 @@ background(){
 
 ff(){
   rm /tmp/bookmarks.html || true
-  buku /tmp/bookmarks.html
+  buku -e /tmp/bookmarks.html
   background firefox -p Tom --class browser-tom
+}
+
+ffmusic(){
+  background firefox -p Music --name ffmusic --class browser-music
 }
 
 ffvpn(){
@@ -277,6 +281,8 @@ case "$command" in
       background "$@"; exit 0 ;;
     ff)
       ff "$@"; exit 0 ;;
+    ffmusic)
+      ffmusic "$@"; exit 0 ;;
     ffvpn)
       ffvpn "$@"; exit 0 ;;
     ffclean)
