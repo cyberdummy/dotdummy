@@ -4,7 +4,7 @@ set -euo pipefail
 # Search for a command from history and copy to clipboard
 hist() {
   # history does not work in fish?
-  fish -c history | awk '{$1=$1};1' | fzf --print0 | xsel -b -i
+  fish -c history | awk '{$1=$1};1' | fzf --print0 | wl-copy --type 'text/plain'
 }
 
 sumcol() {
