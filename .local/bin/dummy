@@ -173,12 +173,16 @@ nn() {
         fi
 
         if hash docker 2>/dev/null; then
-            docker pull amazon/aws-cli:latest
+            docker pull amazon/aws-cli:latest || true
             docker system prune -f
         fi
 
         if hash pip 2>/dev/null; then
             pip install --upgrade -r ~/.config/pip/requirements.txt --break-system-packages
+        fi
+
+        if hash cargo 2>/dev/null; then
+            cargo install (cat ~/.cargo/crates.txt)
         fi
 
         if hash composer 2>/dev/null; then
