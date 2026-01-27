@@ -182,7 +182,7 @@ nn() {
         fi
 
         if hash cargo 2>/dev/null; then
-            cargo install (cat ~/.cargo/crates.txt)
+            cargo install $(cat ~/.cargo/crates.txt)
         fi
 
         if hash composer 2>/dev/null; then
