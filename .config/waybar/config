@@ -195,7 +195,7 @@
         "on-scroll-down": "playerctl -p firefox previous"
     },
     "custom/mail": {
-        "exec": "find $HOME/mail/*/{new,cur} -type f | grep -vE ',[^,]*S[^,]*$' | wc -l",
+        "exec": "find $HOME/mail/*/Inbox/{new,cur} -type f | grep -vE ',[^,]*S[^,]*$' | wc -l",
         "format": "📧 {}",
         "interval": 15,
         "signal": 7,

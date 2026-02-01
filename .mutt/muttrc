@@ -15,6 +15,7 @@ set mail_check_stats = yes # update mailbox stats when checking for new
 set timeout = 30 # check for new mail every 30 secs when idle
 set wrap = 80 # word wrap
 set delete = yes # on sync/close dont prompt for delete
+set reverse_name = yes # use the address the mail was sent to as the default from
 
 # Index
 set index_format = ' %Z %?X?📎&-? %-15.15L [%<[y?%<[m?%<[d?%[%H:%M]&%[%a %d]>&%[%b %d]>&%[%m/%y]>] %s'
@@ -33,10 +34,10 @@ folder-hook . 'unset trash; unset record; unset postponed' # dont want variables
 
 # Mailboxes
 set folder = '~/mail' # folder that holds the Maildir's
-mailboxes `echo ~/mail/*`
+mailboxes `echo ~/mail/*/Inbox`
 source ~/.mutt/mailbox.conf.sh| # load mailbox specific settings
 
-set spoolfile = '=tom' # default box
+set spoolfile = '=tom/Inbox' # default box
 
 set ssl_starttls = yes # always use STARTTLS if we can
 
@@ -97,6 +98,14 @@ macro attach,compose gu \
 macro attach,compose,index,pager gc \
     '<pipe-entry>LC_ALL=C urlscan --run "echo \"{}\" | wl-copy -n"<Enter>' \
     'URL Scan to clipboard'
+
+bind compose o noop
+bind index o noop
+bind pager o noop
+
+macro attach,compose,index,pager ol \
+    '<pipe-entry>LC_ALL=C urlopen.php<Enter>' \
+    'Open link'
 
 # open this part in browser
 macro attach,compose h \

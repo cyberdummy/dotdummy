@@ -23,4 +23,6 @@ send2-hook '~f ^tom@codeclick\.co\.uk$' \
 fcc-save-hook '~f ^tom@cyberdummy\.co\.uk$' '=tom/Sent/'
 fcc-save-hook '~f ^tom@codeclick\.co\.uk$' '=tom/Sent/'
 
-macro index,pager gt "<change-folder>=tom<enter>" "Go to tom mailbox"
+macro index,pager gt "<change-folder>=tom/Inbox<enter>" "Go to tom mailbox"
+
+# vim: filetype=muttrc
