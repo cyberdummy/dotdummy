@@ -55,7 +55,7 @@ function fish_prompt
   set_color yellow
   set live (dake is_live)
   if string match -q -e -- 'live' $live
-    set_color red
+    set_color blue
   end
   echo $live
   set_color yellow
