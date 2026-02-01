@@ -1,15 +1,11 @@
 buku
-#docker-compose
-#git+git://github.com/pimutils/khal.git
 vdirsyncer
 streamlink
 khard
 pillow
 reportlab
 qmk
-#tvnamer
 yewtube
 vdirsyncer[google]
 setuptools
 termdown
-chatblade
