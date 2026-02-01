@@ -38,6 +38,12 @@ stopwatch(){
     done
 }
 
+uuidv4_clip(){
+  local uuid=$(uuidgen)
+  echo -n $uuid | wl-copy
+  notify-send $uuid
+}
+
 [ $# -gt 0 ] || exit 1
 
 command="$1"
@@ -54,6 +60,8 @@ case "$command" in
         countdown "$@"; exit 0 ;;
     stopwatch)
         stopwatch "$@"; exit 0 ;;
+    uuidv4)
+        uuidv4_clip "$@"; exit 0 ;;
     *)
         echo "`basename "$0"` $command: unknown command." >&2
         exit 1
