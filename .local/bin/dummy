@@ -139,7 +139,9 @@ scratchpad() {
 
 nn() {
     # push pass db
-    pass git push
+    if [[ $(pass git remote -v | wc -l) -ge 1 ]]; then
+        pass git push
+    fi
 
     # documents add and push
     if [[ -d $HOME/documents/.git ]]; then
@@ -154,8 +156,11 @@ nn() {
         (
             cd $docs && \
             git add -A && \
-            git commit -am 'latest' && \
-            git push
+            git commit -am 'latest'
+
+            if [[ $(git remote -v | wc -l) -ge 1 ]]; then
+                git push
+            fi
         ) || true
     fi
 
@@ -244,13 +249,6 @@ timer() {
   termdown -T "${what}" "${when}" && echo "${what}" && paplay /usr/share/sounds/freedesktop/stereo/complete.oga
 }
 
-dummy_chatblade() {
-  (
-    export OPENAI_API_KEY=$(pass show chatgpt/api-chatblade)
-    chatblade "$@"
-  )
-}
-
 [ $# -gt 0 ] || exit 1
 
 command="$1"
@@ -293,8 +291,6 @@ case "$command" in
       ffclean "$@"; exit 0 ;;
     lock)
       lock "$@"; exit 0 ;;
-    chatblade)
-      dummy_chatblade "$@"; exit 0 ;;
     *)
         echo "`basename "$0"` $command: unknown command." >&2
         exit 1
