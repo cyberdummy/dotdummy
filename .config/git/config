@@ -3,6 +3,7 @@
 	email = tom@cyberdummy.co.uk
 [init]
 	templatedir = ~/.config/git/template
+	defaultBranch = main
 [alias]
 	ctags = !.git/hooks/ctags
 	root = rev-parse --show-toplevel
