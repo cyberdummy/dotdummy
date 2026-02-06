@@ -58,6 +58,7 @@ create_skeleton() {
     '.config/systemd/user'
     '.config/transmission-daemon'
     '.config/twitchy3'
+    '.config/tmuxinator'
     '.gnupg'
     '.local/bin'
     '.local/share'
