@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -eu
+
+function _wofi() {
+    wofi "$@"
+}
+
+function _trim() {
+    local var="${*}"
+    # remove leading whitespace characters
+    var="${var#"${var%%[![:space:]]*}"}"
+    # remove trailing whitespace characters
+    var="${var%"${var##*[![:space:]]}"}"
+    printf '%s' "${var}"
+}
+
+function main() {
+    cd "${HOME}/.local/share/dlip"
+
+    if [[ ! -z ${1+x} ]]; then
+        name=$(_wofi -M fuzzy --dmenu -p name)
+        wl-paste > $name
+        exit 0
+    fi
+
+    clip_files="$(find * -type f | sed "s/^\.\/\(.*\)\.gpg$/\1/")"
+
+    clip=$(printf '%s\n' "${clip_files}" | _wofi -M fuzzy --dmenu)
+    [ -n "${clip}" ] || exit
+
+    contents=$(cat $clip | sed -e 's/[[:space:]]*$//')
+    notify-send "${clip}:
+${contents}"
+    wl-copy -n < $clip
+}
+
+main "${@}"
