@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export EDITOR=vim
+export EDITOR=nvim
 export BROWSER=firefox
 export SSH_AUTH_SOCK=/run/user/$(id -u)/gnupg/S.gpg-agent.ssh
 export PATH=~/.local/bin:~/.config/composer/vendor/bin:~/.local/share/gem/ruby/3.0.0/bin:~/code/go/gopath/bin:~/.cargo/bin:$PATH
