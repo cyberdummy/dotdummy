@@ -59,6 +59,7 @@ create_skeleton() {
     '.config/transmission-daemon'
     '.config/twitchy3'
     '.config/tmuxinator'
+    '.config/opencode'
     '.gnupg'
     '.local/bin'
     '.local/share'
