@@ -1,6 +1,6 @@
 [global]
     monitor = 1
-    follow = none
+    follow = keyboard
     indicate_hidden = yes
 
     offset = 10x10
