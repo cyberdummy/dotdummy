@@ -75,6 +75,7 @@ create_skeleton() {
     '.vim/cache/swaps'
     '.vim/cache/undo'
     '.vim/sessions'
+    '.tmux'
     )
 
     local count=0
