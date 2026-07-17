@@ -154,6 +154,8 @@ aws-access-logs-fields(){
 open-opencode(){
     (
         export CONTEXT7_API_KEY=$(pass show context7/api-key)
+        export GITHUB_PAT=$(pass show github/cli-token | head -n1)
+        export NUCLINO_KEY=$(pass show nuclino/api-key | head -n1)
         opencode "$@"
     )
 }
